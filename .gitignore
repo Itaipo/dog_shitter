@@ -220,3 +220,4 @@ __marimo__/
 .env.*
 !.env.example
 .vscode/settings.json
+.myssh.bat
