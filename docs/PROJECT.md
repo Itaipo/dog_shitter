@@ -47,7 +47,7 @@
 
 **כיוון עבודה נבחר בינתיים:** להתקדם על שכבת הגישה המרוחקת (VPS, שרת איתות, coturn, שירות aiortc) תוך שימוש בחומרה מדומה (video/audio track מדומה, מחלקת `Feeder` מדומה במקום סרוו אמיתי) — כך שאפשר לבנות ולבדוק את כל צינור ה-WebRTC מקצה לקצה במקביל להמתנה/הרכבה של החומרה הפיזית, ולהחליף רק את שלוש נקודות החומרה בסוף.
 
-**עדכון 2026-09-25:** ה-VPS הוקם — Oracle Cloud Always Free, מכונה `kora-signaling` ב-Home Region Israel Central (Jerusalem), shape VM.Standard.E2.1.Micro, Ubuntu 24.04 LTS, IP ציבורי `151.145.95.142`, כולל swap 1GB. נגיש ב-SSH (מפתחות ed25519 לאיתי ולעוזר). עדיין לא הותקן עליו שרת איתות או coturn בפועל — זה הצעד הבא (ראו TASKS.md, SW-06).
+**עדכון 2026-09-25:** ה-VPS הוקם — Oracle Cloud Always Free, מכונה `kora-signaling` ב-Home Region Israel Central (Jerusalem), shape VM.Standard.E2.1.Micro, Ubuntu 24.04 LTS, IP ציבורי `151.145.95.142`, כולל swap 1GB. נגיש ב-SSH (מפתחות ed25519 לאיתי ולעוזר). **שרת איתות (Node.js+ws) כתוב, נבדק מקצה לקצה מול דפדפן אמיתי דרך האינטרנט, ורץ כשירות systemd קבוע.** coturn עדיין לא הותקן — זה הצעד הבא (ראו TASKS.md, SW-06).
 
 אבן הדרך הראשונה: פקודה ב־Pi משחררת חטיף אחד מהמנגנון המודפס.
 
