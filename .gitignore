@@ -221,3 +221,5 @@ __marimo__/
 !.env.example
 .vscode/settings.json
 .myssh.bat
+# Node
+node_modules/

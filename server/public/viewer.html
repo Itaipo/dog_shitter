@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kora</title>
+<style>
+  body { margin: 0; font-family: system-ui, sans-serif; background: #111; color: #eee; min-height: 100vh; }
+  header { padding: 14px 16px; font-size: 20px; font-weight: 600; }
+  #status { padding: 0 16px 12px; color: #aaa; font-size: 15px; min-height: 1.4em; }
+  video { display: block; width: 100%; max-height: 72vh; background: #000; }
+  button { margin: 16px; padding: 14px 22px; font-size: 18px; border: 0; border-radius: 10px; background: #2a7; color: #fff; }
+  button:disabled { background: #555; }
+</style>
+</head>
+<body>
+<header>Kora</header>
+<div id="status">לחץ על הכפתור כדי להתחבר למצלמה</div>
+<video id="video" autoplay playsinline muted></video>
+<button id="connect">התחבר למצלמה</button>
+<button id="listen" disabled>🔇 הפעל שמע</button>
+<script>
+  const TARGET_ID = 'pi-1';
+  const VIEWER_ID = 'viewer-' + Math.random().toString(36).slice(2, 8);
+  const statusEl = document.getElementById('status');
+  const video = document.getElementById('video');
+  const button = document.getElementById('connect');
+  const listenButton = document.getElementById('listen');
+  // Video and audio arrive as two separate tracks (each in its own stream),
+  // so we collect them into one MediaStream that the <video> element plays.
+  const mediaStream = new MediaStream();
+
+  const setStatus = (text) => { statusEl.textContent = text; };
+
+  const hashKey = new URLSearchParams(location.hash.slice(1)).get('key');
+  if (hashKey) {
+    try { localStorage.setItem('koraKey', hashKey); } catch (e) {}
+    history.replaceState(null, '', location.pathname);
+  }
+  let key = null;
+  try { key = localStorage.getItem('koraKey'); } catch (e) {}
+  if (!key) setStatus('חסר מפתח. פתח את קישור ההתאמה שקיבלת.');
+
+  function waitForIceGathering(pc) {
+    return new Promise((resolve) => {
+      if (pc.iceGatheringState === 'complete') return resolve();
+      const onChange = () => {
+        if (pc.iceGatheringState === 'complete') {
+          pc.removeEventListener('icegatheringstatechange', onChange);
+          resolve();
+        }
+      };
+      pc.addEventListener('icegatheringstatechange', onChange);
+      setTimeout(resolve, 4000);
+    });
+  }
+
+  async function connect() {
+    if (!key) { setStatus('חסר מפתח. פתח את קישור ההתאמה שקיבלת.'); return; }
+    button.disabled = true;
+    setStatus('מתחבר לשרת...');
+
+    const ws = new WebSocket('ws://' + location.host);
+    const pc = new RTCPeerConnection({
+      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }],
+    });
+
+    pc.ontrack = (event) => {
+      mediaStream.addTrack(event.track);
+      video.srcObject = mediaStream;
+      video.play().catch(() => {});
+      if (event.track.kind === 'audio') listenButton.disabled = false;
+    };
+    pc.onconnectionstatechange = () => {
+      if (pc.connectionState === 'connected') setStatus('מחובר');
+      else setStatus('מצב חיבור: ' + pc.connectionState);
+      if (['failed', 'closed', 'disconnected'].includes(pc.connectionState)) {
+        button.disabled = false;
+        listenButton.disabled = true;
+        for (const track of mediaStream.getTracks()) mediaStream.removeTrack(track);
+        ws.close();
+      }
+    };
+
+    ws.onopen = async () => {
+      ws.send(JSON.stringify({ type: 'register', id: VIEWER_ID, secret: key }));
+      pc.addTransceiver('video', { direction: 'recvonly' });
+      pc.addTransceiver('audio', { direction: 'recvonly' });
+      await pc.setLocalDescription(await pc.createOffer());
+      setStatus('אוסף כתובות רשת...');
+      await waitForIceGathering(pc);
+      ws.send(JSON.stringify({
+        type: 'relay',
+        to: TARGET_ID,
+        payload: { type: 'offer', sdp: pc.localDescription.sdp },
+      }));
+      setStatus('ממתין למצלמה...');
+    };
+
+    ws.onmessage = async (event) => {
+      const msg = JSON.parse(event.data);
+      if (msg.type === 'error') {
+        setStatus('השרת דחה את החיבור: ' + msg.message);
+        button.disabled = false;
+        return;
+      }
+      if (msg.type === 'relay' && msg.payload.type === 'answer') {
+        await pc.setRemoteDescription({ type: 'answer', sdp: msg.payload.sdp });
+        ws.close();
+      }
+    };
+
+    ws.onerror = () => {
+      setStatus('לא הצלחתי להגיע לשרת');
+      button.disabled = false;
+    };
+  }
+
+  button.addEventListener('click', connect);
+
+  // Browsers (iOS especially) only allow sound after a tap, so unmuting
+  // has to happen inside this click handler.
+  listenButton.addEventListener('click', () => {
+    video.muted = !video.muted;
+    listenButton.textContent = video.muted ? '🔇 הפעל שמע' : '🔊 שמע פעיל (לחץ להשתקה)';
+    video.play().catch(() => {});
+  });
+</script>
+</body>
+</html>
