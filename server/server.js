@@ -11,6 +11,32 @@ if (!SECRET) {
   process.exit(1);
 }
 
+// TURN relay (coturn on the same machine). Instead of one shared password that
+// anyone loading the page could read, every client gets short-lived credentials:
+// username = "<expiry timestamp>:<id>", credential = HMAC-SHA1(shared secret, username).
+// coturn re-computes the HMAC itself, so the two only need to share the secret.
+const TURN_SECRET = process.env.KORA_TURN_SECRET;
+const TURN_HOST = process.env.KORA_TURN_HOST;
+const TURN_TTL_SECONDS = 24 * 60 * 60;
+
+function iceServersFor(id) {
+  const servers = [{ urls: "stun:stun.l.google.com:19302" }];
+  if (TURN_SECRET && TURN_HOST) {
+    const username = `${Math.floor(Date.now() / 1000) + TURN_TTL_SECONDS}:${id}`;
+    const credential = crypto.createHmac("sha1", TURN_SECRET).update(username).digest("base64");
+    servers.push({
+      urls: [
+        `stun:${TURN_HOST}:3478`,
+        `turn:${TURN_HOST}:3478?transport=udp`,
+        `turn:${TURN_HOST}:3478?transport=tcp`,
+      ],
+      username,
+      credential,
+    });
+  }
+  return servers;
+}
+
 const VIEWER_PATH = path.join(__dirname, "public", "viewer.html");
 
 function secretMatches(candidate) {
@@ -66,13 +92,21 @@ wss.on("connection", (ws) => {
       myId = msg.id;
       clients.set(myId, ws);
       console.log(`registered: ${myId}`);
+      ws.send(JSON.stringify({ type: "registered", iceServers: iceServersFor(myId) }));
       return;
     }
 
     if (msg.type === "relay" && myId) {
       const target = clients.get(msg.to);
       if (target) {
-        target.send(JSON.stringify({ type: "relay", from: myId, payload: msg.payload }));
+        // Fresh credentials ride along with every relayed message, because the Pi
+        // stays registered for days and its registration-time credentials expire.
+        target.send(JSON.stringify({
+          type: "relay",
+          from: myId,
+          payload: msg.payload,
+          iceServers: iceServersFor(msg.to),
+        }));
       }
     }
   });

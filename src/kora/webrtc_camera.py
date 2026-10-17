@@ -12,7 +12,7 @@ os.environ.setdefault("ALSA_CONFIG_PATH", "/usr/share/alsa/alsa.conf")
 
 import av
 import websockets
-from aiortc import RTCPeerConnection, RTCSessionDescription
+from aiortc import RTCConfiguration, RTCIceServer, RTCPeerConnection, RTCSessionDescription
 from aiortc.mediastreams import MediaStreamTrack, VideoStreamTrack
 from av import VideoFrame
 from libcamera import Transform
@@ -24,6 +24,18 @@ SECRET = Path.home().joinpath(".kora_secret").read_text().strip()
 
 MIC_DEVICE = "plughw:0,0"
 MIC_RATE = 48000
+
+
+def rtc_config(ice_servers):
+    """Build an aiortc config from the server's iceServers list (STUN + TURN)."""
+    servers = []
+    for entry in ice_servers or []:
+        urls = entry["urls"] if isinstance(entry["urls"], list) else [entry["urls"]]
+        urls = [u for u in urls if "transport=tcp" not in u]  # UDP only on the Pi side
+        if urls:
+            servers.append(RTCIceServer(urls=urls, username=entry.get("username"),
+                                        credential=entry.get("credential")))
+    return RTCConfiguration(iceServers=servers)
 
 
 def open_camera():
@@ -145,7 +157,7 @@ async def main():
                 print("Got an offer, creating answer...")
                 await close_current()
 
-                pc = RTCPeerConnection()
+                pc = RTCPeerConnection(rtc_config(msg.get("iceServers")))
                 current_pc = pc
                 pc.addTrack(CameraVideoTrack(picam2))
 
