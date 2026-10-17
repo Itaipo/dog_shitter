@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kora</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Kora">
 <style>
   body { margin: 0; font-family: system-ui, sans-serif; background: #111; color: #eee; min-height: 100vh; }
   header { padding: 14px 16px; font-size: 20px; font-weight: 600; }
@@ -11,11 +14,18 @@
   video { display: block; width: 100%; max-height: 72vh; background: #000; }
   button { margin: 16px; padding: 14px 22px; font-size: 18px; border: 0; border-radius: 10px; background: #2a7; color: #fff; }
   button:disabled { background: #555; }
+  #pair { display: none; padding: 0 16px 8px; }
+  #pair input { width: 100%; box-sizing: border-box; padding: 12px; font-size: 16px; border-radius: 8px; border: 1px solid #555; background: #222; color: #eee; direction: ltr; }
+  #pair button { margin: 10px 0 0; }
 </style>
 </head>
 <body>
 <header>Kora</header>
 <div id="status">לחץ על הכפתור כדי להתחבר למצלמה</div>
+<div id="pair">
+  <input id="pairInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="הדבק כאן את קישור ההתאמה או את המפתח">
+  <button id="pairSave">שמור מפתח</button>
+</div>
 <video id="video" autoplay playsinline muted></video>
 <button id="connect">התחבר למצלמה</button>
 <button id="listen" disabled>🔇 הפעל שמע</button>
@@ -39,7 +49,28 @@
   }
   let key = null;
   try { key = localStorage.getItem('koraKey'); } catch (e) {}
-  if (!key) setStatus('חסר מפתח. פתח את קישור ההתאמה שקיבלת.');
+
+  // A home-screen web app has its own storage, separate from Safari's, so the key
+  // saved in Safari isn't there. Let the user paste the pairing link (or the bare
+  // key) once; it is kept only in this browser's localStorage.
+  const pairBox = document.getElementById('pair');
+  const pairInput = document.getElementById('pairInput');
+  function showPairing() {
+    pairBox.style.display = 'block';
+    setStatus('חסר מפתח. הדבק את קישור ההתאמה שקיבלת.');
+  }
+  document.getElementById('pairSave').addEventListener('click', () => {
+    let text = pairInput.value.trim();
+    const match = text.match(/[#&?]key=([^&\s]+)/);
+    if (match) text = decodeURIComponent(match[1]);
+    if (!text) return;
+    key = text;
+    try { localStorage.setItem('koraKey', key); } catch (e) {}
+    pairInput.value = '';
+    pairBox.style.display = 'none';
+    setStatus('המפתח נשמר. לחץ על הכפתור כדי להתחבר למצלמה');
+  });
+  if (!key) showPairing();
 
   function waitForIceGathering(pc) {
     return new Promise((resolve) => {
@@ -56,7 +87,7 @@
   }
 
   async function connect() {
-    if (!key) { setStatus('חסר מפתח. פתח את קישור ההתאמה שקיבלת.'); return; }
+    if (!key) { showPairing(); return; }
     button.disabled = true;
     setStatus('מתחבר לשרת...');
 
