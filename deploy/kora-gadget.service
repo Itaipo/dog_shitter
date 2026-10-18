@@ -1,0 +1,13 @@
+[Unit]
+Description=Kora gadget page (local only, exposed via tailscale serve)
+After=network.target
+
+[Service]
+User=itaipo
+WorkingDirectory=/home/itaipo/gadget-ui
+ExecStart=/usr/bin/python3 -m http.server 8081 --bind 127.0.0.1
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
