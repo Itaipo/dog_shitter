@@ -223,3 +223,6 @@ __marimo__/
 .myssh.bat
 # Node
 node_modules/
+
+# מקורות התמונות הגדולים (נשמרים מקומית בלבד)
+experiments/gadget-ui/assets/source/

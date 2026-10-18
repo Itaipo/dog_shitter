@@ -7,414 +7,215 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Kora">
-<meta name="theme-color" content="#2b0a8f">
+<meta name="theme-color" content="#1a0b3d">
 <title>Kora Gadget</title>
-<link rel="preload" as="image" href="assets/feed_up.webp">
+<link rel="preload" as="image" href="assets/shell.webp">
 <link rel="preload" as="image" href="assets/feed_down.webp">
 <!--
   ניסוי עיצוב בלבד (D-045): כל הנתונים כאן מדומים, אין חיבור ל-Pi.
-  החיבור האמיתי יתחבר בסוף הקובץ דרך window.Kora (ראו "נקודות חיבור").
+  גרסה 3: כל החלקים הפיזיים הם תמונות (נוצרו ב-GPT, עובדו ע"י tools/process_assets.py).
+  כל המידות באחוזים/cqw מתוך תמונת המעטפת, כך שהמכשיר מתאים לכל גודל מסך.
+  החיבור האמיתי יתחבר בסוף הקובץ דרך window.Kora.
 -->
 <style>
   :root {
-    --ink: #0c0620;
-    --violet: #7b2bff; --violet-d: #3a0fb0; --violet-dd: #1d055f;
-    --magenta: #ff1f8e; --yellow: #ffe600; --cyan: #00e5ff; --lime: #b6ff00; --red: #ff1f3d;
-    --lcd: #ffb000; --lcd-bg: #140700;
-    --tx: 0; --ty: 0; --edge: rgba(10, 5, 28, .55);
-    --noise: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22180%22 height=%22180%22%3E%3Cfilter id=%22n%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%222%22 stitchTiles=%22stitch%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.9 0 0 0 -0.34%22/%3E%3C/filter%3E%3Crect width=%22100%%22 height=%22100%%22 filter=%22url(%23n)%22/%3E%3C/svg%3E") 0 0 / 180px 180px;
-    --brush: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22320%22 height=%22200%22%3E%3Cfilter id=%22b%22 x=%220%22 y=%220%22 width=%22100%%22 height=%22100%%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.012 0.95%22 numOctaves=%222%22 stitchTiles=%22stitch%22/%3E%3CfeColorMatrix type=%22matrix%22 values=%220 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.1 0 0 0 -0.42%22/%3E%3C/filter%3E%3Crect width=%22100%%22 height=%22100%%22 filter=%22url(%23b)%22/%3E%3C/svg%3E") 0 0 / 320px 200px;
-    --scratch: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22340%22 height=%22340%22%3E%3Cg fill=%22none%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M20 60 L120 38%22 stroke=%22%23fff%22 stroke-opacity=%22.30%22 stroke-width=%22.7%22/%3E%3Cpath d=%22M200 300 L310 240%22 stroke=%22%23fff%22 stroke-opacity=%22.26%22 stroke-width=%22.6%22/%3E%3Cpath d=%22M60 200 L90 180 M64 204 L100 184%22 stroke=%22%23fff%22 stroke-opacity=%22.22%22 stroke-width=%22.5%22/%3E%3Cpath d=%22M250 40 L330 90%22 stroke=%22%23000%22 stroke-opacity=%22.25%22 stroke-width=%22.6%22/%3E%3Cpath d=%22M150 150 L240 130%22 stroke=%22%23fff%22 stroke-opacity=%22.18%22 stroke-width=%22.5%22/%3E%3Cpath d=%22M30 310 L130 280%22 stroke=%22%23000%22 stroke-opacity=%22.22%22 stroke-width=%22.6%22/%3E%3Cpath d=%22M280 170 L300 150%22 stroke=%22%23fff%22 stroke-opacity=%22.3%22 stroke-width=%22.8%22/%3E%3C/g%3E%3C/svg%3E") 0 0 / 340px 340px;
-    --smudge: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22260%22 height=%22260%22%3E%3Cdefs%3E%3CradialGradient id=%22g%22%3E%3Cstop offset=%220%22 stop-color=%22%23fff%22 stop-opacity=%22.16%22/%3E%3Cstop offset=%221%22 stop-color=%22%23fff%22 stop-opacity=%220%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Cellipse cx=%2290%22 cy=%22130%22 rx=%2254%22 ry=%2240%22 fill=%22url(%23g)%22/%3E%3Cellipse cx=%22190%22 cy=%2270%22 rx=%2240%22 ry=%2230%22 fill=%22url(%23g)%22 transform=%22rotate(30 190 70)%22/%3E%3Cg fill=%22none%22 stroke=%22%23fff%22 stroke-opacity=%22.07%22 stroke-width=%221.1%22 transform=%22rotate(-20 90 130)%22%3E%3Cellipse cx=%2290%22 cy=%22130%22 rx=%228%22 ry=%2211%22/%3E%3Cellipse cx=%2290%22 cy=%22130%22 rx=%2213%22 ry=%2217%22/%3E%3Cellipse cx=%2290%22 cy=%22130%22 rx=%2218%22 ry=%2223%22/%3E%3Cellipse cx=%2290%22 cy=%22130%22 rx=%2223%22 ry=%2229%22/%3E%3Cellipse cx=%2290%22 cy=%22130%22 rx=%2228%22 ry=%2235%22/%3E%3C/g%3E%3C/svg%3E") 0 0 / 260px 260px;
-    --steel: var(--brush), linear-gradient(calc(180deg + var(--tx) * 20deg), #dfe1f1 0%, #9a9cbc 45%, #cfd1e6 100%);
-    --brushed: var(--brush), repeating-linear-gradient(90deg, #ffffff0c 0 1px, #00000010 1px 2px), linear-gradient(calc(180deg + var(--tx) * 12deg), #50527a 0%, #2d2f4a 55%, #3d3f60 100%);
-    --dome: clamp(76px, 14.5dvh, 112px);
-    --tank: clamp(96px, 16.5dvh, 150px);
+    --ink: #0c0620; --yellow: #ffe600; --lime: #b6ff00; --red: #ff1f3d; --magenta: #ff1f8e;
+    --lcd: #ffb000; --lcd-bg: #120600;
+    --tx: 0; --ty: 0;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
   html, body { margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none; }
   body {
-    position: fixed; inset: 0;
-    background: radial-gradient(circle at 15% 8%, #ff1f8e55 0, transparent 38%), radial-gradient(circle at 90% 95%, #00e5ff44 0, transparent 40%), #0b0420;
-    font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif; color: var(--ink);
+    position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; perspective: 1200px;
+    background: radial-gradient(circle at 18% 6%, #7b2bff55 0, transparent 40%), radial-gradient(circle at 88% 96%, #00e5ff33 0, transparent 42%), #0a0418;
+    font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif; color: #fff;
     user-select: none; -webkit-user-select: none; touch-action: manipulation;
-    display: flex; justify-content: center; perspective: 1100px;
     padding: max(6px, env(safe-area-inset-top)) 6px max(6px, env(safe-area-inset-bottom));
   }
 
-  /* ---------- מעטפת המכשיר: שריון עם פינות חתוכות, ידיות צד וברגים ---------- */
-  #shell { position: relative; width: 100%; max-width: 450px; height: 100%; transform: rotateX(calc(var(--ty) * -5deg)) rotateY(calc(var(--tx) * 6deg)); transform-style: flat;
-    filter: drop-shadow(calc(var(--tx) * -7px) calc(12px + var(--ty) * -4px) 16px #000c) drop-shadow(0 2px 1px #000); }
-  #gadget {
-    position: absolute; inset: 3px; display: flex; flex-direction: column; gap: clamp(5px, 1dvh, 10px);
-    padding: clamp(8px, 1.5dvh, 13px) 24px clamp(8px, 1.5dvh, 13px);
-    background:
-      var(--scratch), var(--noise),
-      linear-gradient(calc(160deg + var(--tx) * 35deg), #ffffff50 0, #ffffff00 22%),
-      linear-gradient(165deg, var(--violet) 0%, var(--violet-d) 55%, var(--violet-dd) 100%);
-    clip-path: polygon(0 24px, 24px 0, calc(100% - 24px) 0, 100% 24px, 100% calc(100% - 24px), calc(100% - 24px) 100%, 24px 100%, 0 calc(100% - 24px));
-    box-shadow: inset 0 0 0 3px #ffffff22, inset 0 0 0 7px #0003, inset 0 -34px 44px #0006;
+  /* ---------- המכשיר: כל המיקומים באחוזים מתוך תמונת המעטפת (783x1693) ---------- */
+  #shell {
+    position: relative; container-type: size; aspect-ratio: 783 / 1693;
+    height: min(calc(100dvh - 12px), calc((100vw - 12px) * 2.162));
+    transform: rotateX(calc(var(--ty) * -4deg)) rotateY(calc(var(--tx) * 5deg));
+    filter: drop-shadow(calc(var(--tx) * -1.4cqw) calc(2.4cqw + var(--ty) * -.8cqw) 3.4cqw #000d) drop-shadow(0 .3cqw .4cqw #000);
   }
-  #frame { position: absolute; inset: 0; background: var(--noise), var(--scratch), linear-gradient(calc(135deg + var(--tx) * 40deg), #f4f5ff, #7d7fa8 40%, #e9eafc 60%, #5f6190);
-    clip-path: polygon(0 26px, 26px 0, calc(100% - 26px) 0, 100% 26px, 100% calc(100% - 26px), calc(100% - 26px) 100%, 26px 100%, 0 calc(100% - 26px)); }
-  .grip { position: absolute; top: 24%; bottom: 24%; width: 12px; z-index: 5; border-radius: 6px; background: repeating-linear-gradient(180deg, #14082e 0 5px, #3d2a73 5px 7px, #14082e 7px 9px); box-shadow: inset 0 0 0 1px #ffffff22, 0 1px 0 #fff3; }
-  .grip.l { left: 6px; } .grip.r { right: 6px; }
-  .screw { position: absolute; width: 13px; height: 13px; border-radius: 50%; z-index: 9; background: radial-gradient(circle at 35% 30%, #fff, #b8bad6 50%, #5a5c82); box-shadow: 0 1px 1px #000a, inset 0 0 0 1px #0004; }
-  .screw::after { content: ""; position: absolute; left: 2px; right: 2px; top: 5.5px; height: 2px; background: #2b2d4a; transform: rotate(var(--r, 35deg)); border-radius: 1px; box-shadow: 0 1px 0 #fff6; }
-  .screw.s1 { top: 11px; left: 11px; --r: 20deg; } .screw.s2 { top: 11px; right: 11px; --r: 80deg; } .screw.s3 { bottom: 11px; left: 11px; --r: 50deg; } .screw.s4 { bottom: 11px; right: 11px; --r: 110deg; }
-  .seam { height: 3px; flex: none; border-radius: 2px; background: #0004; box-shadow: 0 1px 0 #ffffff33; margin: 0 6px; }
+  #shell.shake { animation: shake .12s 3; } #shell.thump { animation: shake .09s 2; }
+  .box { position: absolute; overflow: hidden; }
+  #shellImg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 20; pointer-events: none; display: block; }
+  #sheen { position: absolute; inset: 0; z-index: 21; pointer-events: none; mix-blend-mode: soft-light; opacity: .75;
+    background: linear-gradient(calc(110deg + var(--tx) * 40deg), #fff0 0, #ffffffcc 42%, #fff0 62%);
+    -webkit-mask: url(assets/shell.webp) center / 100% 100% no-repeat; mask: url(assets/shell.webp) center / 100% 100% no-repeat; }
 
-  /* ---------- פס עליון: סמל, שם, רמקול ---------- */
-  #top { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 2px 8px 0; flex: none; }
-  #brand { display: flex; align-items: center; gap: 8px; }
-  #emblem { width: 40px; height: 40px; filter: drop-shadow(1px 2px 0 #0008); }
-  #title { padding: 3px 12px 2px; font: 900 22px/1 "Impact", "Arial Black", sans-serif; letter-spacing: 3px; color: var(--yellow); -webkit-text-stroke: 1px var(--ink); text-shadow: 2px 2px 0 var(--magenta), 3px 3px 0 var(--ink);
-    background: linear-gradient(#1a0b3d, #0d0524); border: 2px solid #8d8db3; border-radius: 6px; box-shadow: inset 0 0 8px #000, 0 2px 0 #0008; transform: skew(-6deg); }
-  #grille { flex: 1; height: 28px; max-width: 90px; background: radial-gradient(circle, #05010f 2.2px, transparent 2.8px) 0 0 / 8px 8px; border-radius: 8px; box-shadow: inset 0 0 0 2px #0006, 0 1px 0 #fff3; background-color: #2a1170; }
-  .signal { display: flex; gap: 3px; align-items: flex-end; direction: ltr; }
-  .signal i { display: block; width: 6px; background: var(--lime); border: 1px solid var(--edge); border-radius: 2px; box-shadow: 0 0 6px var(--lime); }
-  .signal i:nth-child(1) { height: 7px; } .signal i:nth-child(2) { height: 12px; } .signal i:nth-child(3) { height: 17px; } .signal i:nth-child(4) { height: 22px; background: #44306f; box-shadow: none; }
+  /* ---------- חלונות המעטפת (מתחת לתמונת המעטפת; מעט חופפים כדי שלא יהיו פערים) ---------- */
+  #screenBox { left: 17.4%; top: 9.45%; width: 65.1%; height: 28.7%; background: #0d1b2a; }
+  #counterBox { left: 16.8%; top: 42.2%; width: 66.3%; height: 5.2%; background: linear-gradient(#050202, #160800); }
+  #panelBox { left: 15.5%; top: 51.3%; width: 68.9%; height: 27%; background: #2c2e48; }
+  #tankBox { left: 16%; top: 82.4%; width: 67.9%; height: 10.1%; background: #111; }
 
-  /* ---------- מד חטיפים בסגנון שעון ישן ברכב + נורת נביחות ---------- */
-  #row2 { display: flex; gap: 10px; align-items: stretch; flex: none; }
-  #counter { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; direction: ltr; padding: 7px 10px 7px 8px; border-radius: 16px; border: 2px solid var(--edge);
-    background: var(--brush), linear-gradient(calc(180deg + var(--tx) * 18deg), #e8e9f8 0%, #8f91b6 42%, #d3d4ea 100%); box-shadow: 0 4px 0 #0007, inset 0 0 0 2px #fff9, inset 0 -3px 6px #0004; }
-  #clockBtns { display: flex; flex-direction: column; gap: 7px; }
-  .cbtn { position: relative; width: 31px; height: 27px; padding: 0; border-radius: 50% / 45%; border: 1.5px solid var(--edge); cursor: pointer;
-    background: radial-gradient(ellipse at 50% 20%, #fff 0, #dcdcf1 35%, #8e90b6 85%, #5e6088 100%); box-shadow: 0 4px 0 #1b1c3a, 0 5px 3px #0008, inset 0 -3px 4px #0005; transition: transform .05s, box-shadow .05s; }
-  .cbtn:active { transform: translateY(3px); box-shadow: 0 1px 0 #1b1c3a, 0 2px 2px #0008, inset 0 -2px 3px #0005; }
-  .cbtn svg { width: 15px; height: 15px; filter: drop-shadow(0 1px 0 #fffb); }
-  #lcdWin { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: space-between; padding: 5px 12px; background: var(--lcd-bg); border-radius: 10px; border: 3px solid #1b1b30; box-shadow: inset 0 0 14px #000, inset 0 0 0 1px #ffffff14, 0 1px 0 #fff9; position: relative; overflow: hidden; }
-  #lcdWin::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(160deg, #ffffff28 0, #ffffff00 38%); }
-  #counter .lbl { color: var(--lcd); font: 800 12px/1.1 "Courier New", monospace; letter-spacing: 1px; text-shadow: 0 0 6px var(--lcd); direction: rtl; }
-  #counter .lbl small { display: block; opacity: .6; font-size: 9px; }
-  #digits { display: flex; gap: 6px; direction: ltr; }
-  #digits svg { width: 26px; height: clamp(38px, 6.2dvh, 54px); filter: drop-shadow(0 0 5px var(--lcd)); }
-  #digits .seg { fill: var(--lcd); } #digits .off { fill: var(--lcd); opacity: .08; }
-  #counter.empty #digits { animation: blink .8s steps(2) infinite; }
-
-  /* נורת נביחות: מסגרת מתכת עם אום משושה, עדשה מחורצת */
-  #lampBox { width: clamp(68px, 10.4dvh, 88px); flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  #lampRing { position: relative; width: 100%; aspect-ratio: 100 / 84; cursor: pointer; }
-  #lampSvg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 5px 0 #0009) drop-shadow(0 8px 5px #0006); transition: filter .1s; }
-  #lampSvg .glowOn { opacity: 0; transition: opacity .08s; } #lampSvg .hotspot { opacity: 0; }
-  #lampRing.on #lampSvg { filter: drop-shadow(0 0 10px #ff1f3d) drop-shadow(0 0 26px #ff1f3dcc) drop-shadow(0 0 50px #ff1f3d88); animation: lampFlicker .5s steps(2) infinite; }
-  #lampRing.on .glowOn { opacity: 1; } #lampRing.on .hotspot { opacity: 1; } #lampRing.on .lensOff { opacity: 0; }
-  #barkNum { margin-top: 4px; font: 900 11px "Courier New", monospace; color: var(--yellow); letter-spacing: 1px; text-shadow: 1px 1px 0 var(--ink); }
-
-  /* ---------- מסך המצלמה ---------- */
-  #bezel { position: relative; flex: 1 1 0; min-height: 90px; padding: 9px; border-radius: 20px; border: 2px solid var(--edge);
-    background: linear-gradient(145deg, #2a1b52, #0a0418 60%); box-shadow: inset 0 0 0 2px #ffffff22, inset 0 0 20px #000, 0 3px 0 #ffffff44, 0 0 0 3px #0003; }
-  #bezel::before { content: ""; position: absolute; inset: 4px; border-radius: 16px; border: 2px solid var(--magenta); opacity: .85; pointer-events: none; box-shadow: 0 0 10px var(--magenta), inset 0 0 8px #ff1f8e66; }
-  #screen { position: relative; width: 100%; height: 100%; border-radius: 11px; overflow: hidden; background: #0d1b2a; }
-  #screen canvas, #screen video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  #screen::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 7; background: repeating-linear-gradient(0deg, #0000 0 2px, #0000002a 2px 3px), var(--smudge), linear-gradient(calc(155deg + var(--tx) * 30deg), #ffffff26 0, #ffffff00 32%); box-shadow: inset 0 0 40px #000b; }
-  #camTag { position: absolute; top: 7px; left: 9px; z-index: 5; font: 800 10px "Courier New", monospace; color: #fff; background: #000a; padding: 3px 7px; border-radius: 6px; }
-  #camTag::before { content: "●"; color: var(--red); margin-inline-end: 5px; animation: blink 1.2s steps(2) infinite; }
-  #barkSign { position: absolute; z-index: 6; top: 42%; left: 50%; transform: translate(-50%, -50%) rotate(-6deg) scale(.5); font: 900 clamp(30px, 6dvh, 44px) "Impact", "Arial Black", sans-serif; color: #fff; -webkit-text-stroke: 2px var(--ink); text-shadow: 3px 3px 0 var(--red); opacity: 0; pointer-events: none; }
+  /* מסך המצלמה */
+  #screenBox canvas, #screenBox video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  #screenBox::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 8; box-shadow: inset 0 0 6cqw #000c;
+    background: repeating-linear-gradient(0deg, #0000 0 2px, #0000002a 2px 3px), linear-gradient(calc(150deg + var(--tx) * 30deg), #ffffff30 0, #ffffff00 34%); }
+  #camTag { position: absolute; top: 1.4cqw; left: 1.8cqw; z-index: 5; font: 800 2.5cqw "Courier New", monospace; color: #fff; background: #000a; padding: .5cqw 1.4cqw; border-radius: 1cqw; }
+  #camTag::before { content: "●"; color: var(--red); margin-inline-end: 1cqw; animation: blink 1.2s steps(2) infinite; }
+  .signal { position: absolute; top: 1.6cqw; right: 2cqw; z-index: 5; display: flex; gap: .6cqw; align-items: flex-end; direction: ltr; }
+  .signal i { display: block; width: 1.3cqw; background: var(--lime); border-radius: .3cqw; box-shadow: 0 0 1.4cqw var(--lime); }
+  .signal i:nth-child(1) { height: 1.5cqw; } .signal i:nth-child(2) { height: 2.6cqw; } .signal i:nth-child(3) { height: 3.7cqw; } .signal i:nth-child(4) { height: 4.8cqw; background: #44306f; box-shadow: none; }
+  #barkSign { position: absolute; z-index: 6; top: 42%; left: 50%; transform: translate(-50%, -50%) rotate(-6deg) scale(.5); font: 900 11cqw "Impact", "Arial Black", sans-serif; color: #fff; -webkit-text-stroke: .5cqw var(--ink); text-shadow: .8cqw .8cqw 0 var(--red); opacity: 0; pointer-events: none; }
   #barkSign.show { animation: pop 1.6s ease-out; }
-  #ticker { position: absolute; z-index: 5; left: 0; right: 0; bottom: 0; background: #000b; border-top: 2px solid #ffb00055; overflow: hidden; white-space: nowrap; direction: ltr; padding: 4px 0; }
-  #tickerInner { display: inline-block; padding-left: 100%; font: 800 12px "Courier New", monospace; color: var(--lcd); text-shadow: 0 0 6px var(--lcd); animation: marquee 34s linear infinite; }
+  #ticker { position: absolute; z-index: 5; left: 0; right: 0; bottom: 0; background: #000b; border-top: .3cqw solid #ffb00055; overflow: hidden; white-space: nowrap; direction: ltr; padding: .7cqw 0; }
+  #tickerInner { display: inline-block; padding-left: 100%; font: 800 2.6cqw "Courier New", monospace; color: var(--lcd); text-shadow: 0 0 1.4cqw var(--lcd); animation: marquee 34s linear infinite; }
 
-  /* ---------- לוח בקרה: פלדה עם מרקם מוברש ---------- */
-  #deck { position: relative; flex: none; display: flex; flex-direction: column; gap: clamp(6px, 1.1dvh, 11px); padding: clamp(9px, 1.5dvh, 13px) 12px clamp(8px, 1.3dvh, 11px); background: var(--brushed); border: 2px solid var(--edge); border-radius: 18px; box-shadow: inset 0 0 0 2px #ffffff26, inset 0 -8px 14px #0005, 0 3px 0 #ffffff44; }
-  #deck .dscrew { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #a9abc9 55%, #55577c); box-shadow: 0 1px 1px #000a; }
-  #meters { display: grid; grid-template-columns: 1.55fr 1fr; gap: 12px; align-items: center; padding: 0 6px; }
-  #vuBox { display: flex; align-items: center; gap: 8px; background: #08040f; border: 3px solid #1b1b30; border-radius: 9px; padding: 5px 7px; box-shadow: inset 0 0 10px #000, 0 1px 0 #fff4; position: relative; }
-  #vuBox::after { content: ""; position: absolute; inset: 0; border-radius: 6px; pointer-events: none; background: linear-gradient(160deg, #ffffff1e 0, #ffffff00 40%); }
-  #vu { flex: 1; display: grid; grid-template-columns: repeat(14, 1fr); gap: 2.5px; direction: ltr; height: clamp(24px, 3.8dvh, 32px); align-items: end; }
-  #vu i { display: block; height: 100%; border-radius: 2px; background: #2a2144; }
+  /* מד חטיפים + פלוס/מינוס */
+  #counterBox { display: flex; align-items: center; gap: 1.4cqw; padding: 0 2cqw; direction: ltr; }
+  #pm { display: flex; gap: 1.2cqw; height: 78%; align-items: center; }
+  .pmBtn { position: relative; height: 100%; aspect-ratio: 256 / 168; border: 0; padding: 0; cursor: pointer; background: none; filter: drop-shadow(0 .5cqw .4cqw #000b); }
+  .pmBtn img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .pmBtn .dn { opacity: 0; } .pmBtn:active .dn { opacity: 1; } .pmBtn:active .up { opacity: 0; } .pmBtn:active { transform: translateY(.3cqw); }
+  #lcd { flex: 1; display: flex; align-items: center; justify-content: space-between; height: 100%; direction: rtl; }
+  #lcd .lbl { color: var(--lcd); font: 800 2.6cqw/1.1 "Courier New", monospace; letter-spacing: .2cqw; text-shadow: 0 0 1.4cqw var(--lcd); }
+  #lcd .lbl small { display: block; opacity: .6; font-size: 1.9cqw; }
+  #digits { display: flex; gap: 1.4cqw; direction: ltr; }
+  #digits svg { width: 5.2cqw; height: 7.6cqw; filter: drop-shadow(0 0 1.2cqw var(--lcd)); }
+  #digits .seg { fill: var(--lcd); } #digits .off { fill: var(--lcd); opacity: .08; }
+  #counterBox.empty #digits { animation: blink .8s steps(2) infinite; }
+
+  /* לוח הבקרה */
+  #panelBox { background: repeating-linear-gradient(90deg, #ffffff0a 0 1px, #0000 1px 3px), linear-gradient(calc(180deg + var(--tx) * 14deg), #4f5178 0%, #2a2c48 60%, #383a5c 100%); }
+  #vuBox { position: absolute; left: 4%; top: 4.5%; width: 57%; height: 15%; display: flex; align-items: center; gap: 1.4cqw; padding: .8cqw 1.6cqw; background: #06030d; border: .4cqw solid #14142c; border-radius: 1.6cqw; box-shadow: inset 0 0 2cqw #000, 0 .3cqw 0 #ffffff33; }
+  #vuBox::after { content: ""; position: absolute; inset: 0; border-radius: 1.2cqw; pointer-events: none; background: linear-gradient(160deg, #ffffff22 0, #ffffff00 42%); }
+  #vu { flex: 1; display: grid; grid-template-columns: repeat(14, 1fr); gap: .5cqw; direction: ltr; height: 100%; align-items: end; }
+  #vu i { display: block; height: 100%; border-radius: .4cqw; background: #2a2144; }
   #vu i:nth-child(-n+4) { height: 45%; } #vu i:nth-child(n+5):nth-child(-n+8) { height: 65%; } #vu i:nth-child(n+9):nth-child(-n+11) { height: 82%; }
-  #vu i.on { background: #2dff7a; box-shadow: 0 0 6px #2dff7a; }
-  #vu i.on:nth-child(n+9) { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
-  #vu i.on:nth-child(n+12) { background: var(--red); box-shadow: 0 0 7px var(--red); }
-  #db { width: 32px; text-align: left; font: 800 11px "Courier New", monospace; color: var(--lcd); direction: ltr; unicode-bidi: isolate; text-shadow: 0 0 5px var(--lcd); }
-  #gateBox { display: flex; flex-direction: column; gap: 2px; }
-  #gate { -webkit-appearance: none; appearance: none; width: 100%; height: 30px; background: transparent; margin: 0; }
-  #gate::-webkit-slider-runnable-track { height: 10px; border-radius: 6px; background: linear-gradient(90deg, #05030f, #2a2144); border: 2px solid #12122a; box-shadow: inset 0 2px 3px #000, 0 1px 0 #fff4; }
-  #gate::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 30px; margin-top: -12px; border-radius: 5px; border: 1.5px solid var(--edge); background: repeating-linear-gradient(90deg, #0000 0 9px, #0003 9px 10px, #0000 10px 12px), linear-gradient(90deg, #a7a9cc, #fff 45%, #8082aa); box-shadow: 0 4px 0 #14143a, 0 6px 4px #0007; }
-  #gate::-moz-range-track { height: 10px; border-radius: 6px; background: #1c1338; border: 1.5px solid var(--edge); }
-  #gate::-moz-range-thumb { width: 18px; height: 26px; border-radius: 5px; border: 1.5px solid var(--edge); background: #ddd; }
+  #vu i.on { background: #2dff7a; box-shadow: 0 0 1.2cqw #2dff7a; }
+  #vu i.on:nth-child(n+9) { background: var(--yellow); box-shadow: 0 0 1.2cqw var(--yellow); }
+  #vu i.on:nth-child(n+12) { background: var(--red); box-shadow: 0 0 1.4cqw var(--red); }
+  #db { width: 6cqw; text-align: left; font: 800 2.3cqw "Courier New", monospace; color: var(--lcd); direction: ltr; unicode-bidi: isolate; text-shadow: 0 0 1.2cqw var(--lcd); }
+  #gateBox { position: absolute; left: 66%; top: 4.5%; width: 30%; height: 15%; display: flex; align-items: center; }
+  #gate { -webkit-appearance: none; appearance: none; width: 100%; height: 100%; background: transparent; margin: 0; }
+  #gate::-webkit-slider-runnable-track { height: 1.9cqw; border-radius: 1cqw; background: linear-gradient(90deg, #05030f, #2a2144); border: .35cqw solid #12122a; box-shadow: inset 0 .4cqw .6cqw #000, 0 .2cqw 0 #ffffff33; }
+  #gate::-webkit-slider-thumb { -webkit-appearance: none; width: 4.4cqw; height: 6.6cqw; margin-top: -2.6cqw; border-radius: 1cqw; border: .35cqw solid var(--ink); background: repeating-linear-gradient(90deg, #0000 0 1.4cqw, #0003 1.4cqw 1.6cqw, #0000 1.6cqw 2.2cqw), linear-gradient(90deg, #a7a9cc, #fff 45%, #8082aa); box-shadow: 0 .8cqw 0 #14143a, 0 1.2cqw .8cqw #0007; }
+  #gate::-moz-range-track { height: 1.9cqw; border-radius: 1cqw; background: #1c1338; } #gate::-moz-range-thumb { width: 4cqw; height: 6cqw; border-radius: 1cqw; background: #ddd; }
 
-  #buttons { display: grid; grid-template-columns: 1fr 1.5fr 1fr; align-items: end; gap: 6px; }
-  .slot { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; }
-  .plate { font: 800 9px/1 system-ui; letter-spacing: 1.5px; color: #1b1740; background: linear-gradient(#e8e8f6, #a6a8c8); padding: 3px 8px; border-radius: 3px; border: 1px solid #0006; box-shadow: 0 1px 0 #fff6, inset 0 1px 0 #fffb; }
+  /* כפתורי תמונה */
+  .imgBtn { position: absolute; border: 0; padding: 0; background: none; cursor: pointer; }
+  .imgBtn img { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  #audioBtn { left: 2.5%; top: 47%; width: 26%; aspect-ratio: 384 / 390; filter: drop-shadow(0 1cqw .8cqw #000c); transition: transform .06s; }
+  #audioBtn .on { opacity: 0; transition: opacity .12s; } #audioBtn.active .on { opacity: 1; }
+  #audioBtn:active { transform: translateY(.6cqw) scale(.97); filter: brightness(.9) drop-shadow(0 .4cqw .4cqw #000c); }
+  #feedWrap { position: absolute; left: 31%; top: 33%; width: 40%; aspect-ratio: 1; }
+  #feedRing { position: absolute; inset: -.6cqw; border-radius: 50%; pointer-events: none; z-index: 1; background: conic-gradient(var(--yellow) var(--p, 0%), transparent 0); -webkit-mask: radial-gradient(circle, transparent 66%, #000 68%); mask: radial-gradient(circle, transparent 66%, #000 68%); filter: drop-shadow(0 0 1cqw #ffe600aa); }
+  #feed { position: absolute; inset: 0; z-index: 2; border: 0; padding: 0; border-radius: 50%; cursor: pointer; background: url("assets/feed_up.webp") center / contain no-repeat; filter: drop-shadow(0 1.6cqw 1cqw #000b) drop-shadow(0 .4cqw .3cqw #000); transition: transform .06s, filter .06s; }
+  #feed::after { content: ""; position: absolute; inset: 14%; border-radius: 50%; pointer-events: none; mix-blend-mode: screen; opacity: .55; background: radial-gradient(circle at calc(34% + var(--tx) * 14%) calc(26% + var(--ty) * 12%), #ffffff90 0, #ffffff00 38%); }
+  #feed:active:not(:disabled), #feed:disabled { background-image: url("assets/feed_down.webp"); transform: translateY(.6cqw); filter: drop-shadow(0 .6cqw .4cqw #000b) drop-shadow(0 .2cqw .2cqw #000); }
+  #feed:disabled { filter: saturate(.7) brightness(.8) drop-shadow(0 .6cqw .4cqw #000b); cursor: default; }
 
-  /* האכלה: תמונה אמיתית (נוצרה ב-GPT, assets/feed_up.webp). מצב לחוץ: ירידה, כהות וצל קטן */
-  #feedWell { position: relative; width: calc(var(--dome) + 30px); height: calc(var(--dome) + 30px); }
-  #feedRing { position: absolute; inset: -3px; border-radius: 50%; z-index: 1; pointer-events: none; background: conic-gradient(var(--yellow) var(--p, 0%), transparent 0); -webkit-mask: radial-gradient(circle, transparent 66%, #000 68%); mask: radial-gradient(circle, transparent 66%, #000 68%); filter: drop-shadow(0 0 4px #ffe600aa); }
-  #feed { position: relative; z-index: 2; display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; border: 0; padding: 0; cursor: pointer; background: url("assets/feed_up.webp") center / contain no-repeat;
-    filter: drop-shadow(0 9px 5px #000a) drop-shadow(0 2px 1px #000); transition: transform .06s, filter .06s; }
-  #feed::after { content: ""; position: absolute; inset: 14%; border-radius: 50%; pointer-events: none; mix-blend-mode: screen; opacity: .55;
-    background: radial-gradient(circle at calc(34% + var(--tx) * 14%) calc(26% + var(--ty) * 12%), #ffffff90 0, #ffffff00 38%); }
-  #feed svg { position: relative; z-index: 1; width: 34%; height: 34%; filter: drop-shadow(0 1px 0 #ffffff66) drop-shadow(0 -1px 1px #0009); opacity: .72; mix-blend-mode: soft-light; }
-  #feed:active:not(:disabled) { background-image: url("assets/feed_down.webp"); transform: translateY(3px); filter: drop-shadow(0 3px 2px #000a) drop-shadow(0 1px 1px #000); }
-  #feed:disabled { background-image: url("assets/feed_down.webp"); transform: translateY(3px); filter: saturate(.7) brightness(.8) drop-shadow(0 3px 2px #000a); cursor: default; } /* בזמן ההכנה הכפתור נשאר לחוץ */
+  /* ידית: צלחת + כדור */
+  #lever { position: absolute; left: 80.5%; top: 24%; height: 72%; aspect-ratio: 261 / 1158; touch-action: none; filter: drop-shadow(0 1cqw .8cqw #000b); }
+  #lever .plate { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  #leverBall { position: absolute; left: 50%; top: 0; width: 89.6%; margin-left: -44.8%; aspect-ratio: 1 / 1.015; touch-action: none; cursor: grab; z-index: 2; filter: drop-shadow(0 1.1cqw .8cqw #000c); }
+  #leverBall img { width: 100%; height: 100%; pointer-events: none; display: block; }
+  #leverBall.drag { cursor: grabbing; }
+  #leverBall.spring { transition: transform .55s cubic-bezier(.25, 1.9, .5, 1); }
+  #leverBall.auto { transition: transform .17s ease-in; }
 
-  /* שמע: כפתור מתכת מחורץ עם טבעת LED */
-  #audioWell { position: relative; width: clamp(60px, 9.4dvh, 78px); aspect-ratio: 1; border-radius: 50%; padding: 7px; border: 2px solid var(--edge); background: repeating-conic-gradient(#cfd1e8 0 3deg, #62648c 3deg 6deg); box-shadow: 0 6px 0 #0009, 0 9px 8px #0006, inset 0 0 0 4px #14152e; }
-  #audioWell::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; border: 4px solid #1c1a3a; background: #0d0a1e; box-shadow: inset 0 2px 4px #000; transition: .15s; }
-  #audioWell.on::before { border-color: var(--lime); box-shadow: 0 0 14px var(--lime), inset 0 0 10px #b6ff0088; }
-  #audio { position: relative; z-index: 1; width: 100%; height: 100%; border-radius: 50%; border: 2px solid #3b3d66; padding: 0; display: grid; place-items: center; cursor: pointer;
-    background: radial-gradient(circle at 50% 22%, #fff 0, #e1e2f4 28%, #a3a5cb 74%, #7a7ca8 100%); box-shadow: 0 5px 0 #2e3055, 0 7px 4px #0008, inset 0 -5px 8px #0004, inset 0 0 0 3px #ffffff66; transition: transform .06s, box-shadow .06s; }
-  #audio:active { transform: translateY(4px); box-shadow: 0 1px 0 #2e3055, 0 2px 2px #0008, inset 0 -3px 5px #0004, inset 0 0 0 3px #ffffff66; }
-  #audio svg { width: 52%; height: 52%; filter: drop-shadow(0 1px 0 #fffc); }
-  #audio .wave { opacity: 0; transition: opacity .15s; } #audioWell.on .wave { opacity: 1; animation: waveFlick .5s ease-in-out infinite alternate; }
+  /* ראש המכשיר: נורת חוטם, סמל ושלט */
+  #lampWrap { position: absolute; left: 5%; top: 1.2%; width: 21.8%; aspect-ratio: 480 / 372; z-index: 22; cursor: pointer; }
+  #lampWrap img { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  #lampWrap .on { opacity: 0; transition: opacity .08s; }
+  #lampWrap.on .on { opacity: 1; animation: lampFlicker .5s steps(2) infinite; }
+  #lampWrap.on { filter: drop-shadow(0 0 2.2cqw #ff1f3d) drop-shadow(0 0 5cqw #ff1f3dcc) drop-shadow(0 0 10cqw #ff1f3d88); }
+  #emblem { position: absolute; left: 73.6%; top: 1.6%; width: 13%; z-index: 22; filter: drop-shadow(.3cqw .5cqw .3cqw #000a); }
+  #nameplate { position: absolute; left: 29.4%; top: 6.5%; width: 41.8%; height: 2.7%; z-index: 22; display: grid; place-items: center; font: 900 4.2cqw/1 "Impact", "Arial Black", sans-serif; letter-spacing: 1.4cqw; color: #e8e4ff; text-shadow: 0 .2cqw 0 #fff6, 0 -.2cqw 0 #0009; }
 
-  /* ידית משיכה: מוט כרום וכדור גומי אדום בחריץ, ישר מול המשתמש */
-  #lever { position: relative; width: clamp(56px, 9.4dvh, 72px); height: calc(var(--dome) + 26px); border-radius: 12px; border: 2px solid var(--edge); padding: 0; touch-action: none;
-    background: linear-gradient(90deg, #6b6d95, #e6e7fa 22%, #fdfdff 50%, #c5c7e0 78%, #5f6190); box-shadow: 0 6px 0 #0009, 0 9px 8px #0006, inset 0 0 0 2px #ffffffaa, inset 0 0 0 5px #0002; }
-  #leverSlot { position: absolute; left: 50%; top: 8px; bottom: 8px; width: 16px; margin-left: -8px; border-radius: 8px; background: linear-gradient(90deg, #02010a, #1c1840 50%, #02010a); border: 1.5px solid var(--edge); box-shadow: inset 0 4px 6px #000, 0 1px 0 #fff8; }
-  .notch { position: absolute; left: 7px; width: 9px; height: 3px; background: #1b1b3a; border-radius: 2px; box-shadow: 0 1px 0 #fff9; } .notch.r { left: auto; right: 7px; }
-  #leverRod { position: absolute; left: 50%; top: 14px; width: 8px; margin-left: -4px; height: 24px; border-radius: 4px; background: linear-gradient(90deg, #5a5c86, #fff 40%, #8688b0 70%, #3c3e66); box-shadow: 0 1px 2px #000a; z-index: 1; transform-origin: top; }
-  #leverHandle { position: absolute; left: 50%; top: 8px; width: 46px; height: 46px; margin-left: -23px; border-radius: 50%; cursor: grab; touch-action: none; z-index: 2;
-    background: radial-gradient(circle at 36% 26%, #ffe0ea 0, #ff5a94 24%, #d10a52 62%, #7a0028 100%); border: 2px solid #3a0012; box-shadow: 0 8px 0 #4a0015, 0 11px 10px #000a, inset 0 -7px 10px #0007, inset 0 4px 6px #ffffff88; }
-  #leverHandle::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: repeating-radial-gradient(circle at 50% 50%, #0000 0 4px, #0000001c 4px 5px); }
-  #leverHandle::after { content: ""; position: absolute; translate: calc(var(--tx) * 5px) calc(var(--ty) * 3px); left: 18%; top: 9%; width: 38%; height: 22%; border-radius: 50%; background: linear-gradient(#ffffffe0, #ffffff18); transform: rotate(-22deg); }
-  #leverHandle.drag { cursor: grabbing; }
-  #leverHandle.spring, #leverRod.spring { transition: transform .55s cubic-bezier(.25, 1.9, .5, 1); }
-  #leverHandle.auto, #leverRod.auto { transition: transform .17s ease-in; }
-
-  /* ---------- מיכל זכוכית אמיתי ---------- */
-  #tankHazard { height: 9px; flex: none; margin: 0 4px; border-radius: 3px; border: 1.5px solid var(--edge); background: repeating-linear-gradient(-45deg, var(--yellow) 0 8px, var(--ink) 8px 16px); box-shadow: 0 1px 0 #fff4; }
-  #tankFrame { position: relative; flex: none; height: var(--tank); padding: 7px; border-radius: 14px; border: 2px solid var(--edge); background: var(--steel); box-shadow: 0 5px 0 #0009, inset 0 0 0 2px #ffffffb0, inset 0 -3px 5px #0004; }
-  #tankFrame .ts { position: absolute; width: 7px; height: 7px; border-radius: 50%; z-index: 9; background: radial-gradient(circle at 35% 30%, #fff, #8e90b6 60%, #3f4168); box-shadow: 0 1px 1px #0009; }
-  #tank { position: relative; height: 100%; border-radius: 6px; overflow: hidden; background: #0e0a1a; box-shadow: inset 0 0 0 2px #0008; }
-  #tank .wall { position: absolute; inset: 0 0 30% 0; background:
-      radial-gradient(ellipse at 70% 15%, #fff7d6 0, #ffe9a8 14%, transparent 52%),
-      linear-gradient(180deg, #7fb2d9 0%, #cfe3ef 62%, #e8dfc9 100%); }
-  #tank .wall::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, #ffffff12 0 2px, #0000 2px 14px); }
-  #tank .hill { position: absolute; bottom: 30%; border-radius: 50% 50% 0 0; }
-  #tank .h1 { left: -20px; width: 140px; height: 38px; background: linear-gradient(#8fbf6a, #6fa24d); } #tank .h2 { right: -30px; width: 170px; height: 52px; background: linear-gradient(#7fb35a, #5f9340); }
-  #beam { position: absolute; top: 0; left: 52%; width: 40%; height: 70%; background: linear-gradient(180deg, #fff6c855, #fff6c800); clip-path: polygon(28% 0, 62% 0, 100% 100%, 0 100%); pointer-events: none; }
-  #floor { position: absolute; left: -10%; right: -10%; bottom: 0; height: 34%; transform-origin: top; background:
-      repeating-linear-gradient(90deg, #00000028 0 2px, transparent 2px 38px),
-      repeating-linear-gradient(0deg, #ffffff10 0 1px, transparent 1px 7px),
-      linear-gradient(180deg, #a87440 0%, #c28a52 55%, #8a5c30 100%); border-top: 2px solid #5a3a1a; box-shadow: inset 0 8px 10px #0004; }
-  #floor::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 60% 10%, #ffe9b055, transparent 60%); }
-  #bowl { position: absolute; left: 12px; bottom: 20%; width: 34px; height: 14px; z-index: 2; border-radius: 3px 3px 14px 14px / 3px 3px 12px 12px; background: linear-gradient(90deg, #7d7fa6, #fff 40%, #9193b8 70%, #5f6190); border: 1.5px solid #2a2c4a; }
-  #bowl::before { content: ""; position: absolute; left: 3px; right: 3px; top: -3px; height: 6px; border-radius: 50%; background: radial-gradient(ellipse, #3d9bd9 0, #2b6fa3 100%); border: 1.5px solid #2a2c4a; }
-  #plant { position: absolute; right: 8px; bottom: 22%; width: 38px; height: 42px; z-index: 1; }
-  #dogShadow { position: absolute; bottom: calc(16% - 2px); left: 0; height: 9px; width: 50px; z-index: 2; border-radius: 50%; background: radial-gradient(ellipse, #000a 0, #0000 72%); filter: blur(1.5px); will-change: transform; }
-  #dog { position: absolute; left: 0; bottom: calc(18% - 3px); height: 70%; aspect-ratio: 170 / 120; z-index: 3; will-change: transform; }
-  #dogSvg { width: 100%; height: 100%; overflow: visible; }
-  .leg { transform-box: fill-box; transform-origin: 50% 6%; animation: run .3s ease-in-out infinite alternate; }
-  .leg.b, .leg.c { animation-delay: -.15s; }
-  .tail { transform-box: fill-box; transform-origin: 90% 90%; animation: wag .26s ease-in-out infinite alternate; }
-  #dog.sit .leg { animation: none; } #dog.sit .tail { animation-duration: .55s; }
-  #dog.sleep .tail, #dog.sleep .leg { animation: none; }
-  .eyeOpen { transform-box: fill-box; transform-origin: 50% 50%; animation: blinkEye 4.6s infinite; }
-  .eyeShut, .tongue, .brows, .zzz { display: none; }
-  #dog.happy .eyeOpen, #dog.sleep .eyeOpen { display: none; } #dog.happy .eyeShut, #dog.sleep .eyeShut { display: block; }
-  #dog.happy .tongue { display: block; } #dog.angry .brows { display: block; } #dog.sleep .zzz { display: block; animation: zz 2.2s ease-in-out infinite; }
-  #dog.jump #dogSvg { animation: hop .5s ease-out; }
-  #bubble { position: absolute; bottom: 92%; left: 50%; transform: translateX(-50%) scale(0); transform-origin: bottom center; white-space: nowrap; background: #fff; border: 1.5px solid var(--edge); border-radius: 12px; padding: 2px 9px; font: 900 13px system-ui; z-index: 7; }
-  #bubble::after { content: ""; position: absolute; bottom: -8px; left: 50%; margin-left: -6px; border: 6px solid transparent; border-top-color: var(--ink); border-bottom: 0; }
+  /* מיכל + כלבלב */
+  #tankBox { background: linear-gradient(180deg, #f3e9d2 0%, #d8cbb0 52%, #8a5c30 52%, #b07a45 100%); }
+  #tankScene { position: absolute; inset: 0; }
+  #tankScene .beam { position: absolute; top: 0; left: 52%; width: 40%; height: 70%; background: linear-gradient(180deg, #fff6c866, #fff6c800); clip-path: polygon(28% 0, 62% 0, 100% 100%, 0 100%); }
+  #tankScene .floor { position: absolute; left: 0; right: 0; top: 50%; bottom: 0; background: repeating-linear-gradient(90deg, #0000002a 0 .2cqw, #0000 .2cqw 6cqw), linear-gradient(#a87440, #c28a52 50%, #7a4e26); box-shadow: inset 0 1cqw 1.4cqw #0005; }
+  #dogShadow { position: absolute; bottom: 17%; height: 7%; width: 14cqw; border-radius: 50%; background: radial-gradient(ellipse, #000b 0, #0000 72%); filter: blur(.3cqw); will-change: transform; left: 0; }
+  #dog { position: absolute; left: 0; bottom: 14%; width: 0; height: 0; will-change: transform; z-index: 3; }
+  #dog img { position: absolute; bottom: 0; left: 0; transform: translateX(-50%); display: none; max-width: none; filter: drop-shadow(0 .3cqw .3cqw #0007); }
+  #dog[data-s="stand"] .s-stand, #dog[data-s="sit"] .s-sit, #dog[data-s="happy"] .s-happy, #dog[data-s="sleep"] .s-sleep { display: block; }
+  #dog .s-stand { height: 12.4cqw; } #dog .s-sit { height: 12.7cqw; } #dog .s-happy { height: 12.8cqw; } #dog .s-sleep { height: 8.7cqw; }
+  #dogFlip { position: absolute; left: 0; bottom: 0; width: 0; height: 0; transform-origin: 0 100%; }
+  #dog.walk #dogFlip img { animation: bob .22s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+  #dog.angry #dogFlip img { animation: bob .09s ease-in-out infinite alternate; }
+  #dog.jump #dogFlip { animation: hop .5s ease-out; }
+  #bubble { position: absolute; bottom: 13.4cqw; left: 0; transform: translateX(-50%) scale(0); transform-origin: bottom center; white-space: nowrap; background: #fff; color: var(--ink); border: .5cqw solid var(--ink); border-radius: 3cqw; padding: .4cqw 2.2cqw; font: 900 3.2cqw system-ui; z-index: 7; }
+  #bubble::after { content: ""; position: absolute; bottom: -1.9cqw; left: 50%; margin-left: -1.4cqw; border: 1.4cqw solid transparent; border-top-color: var(--ink); border-bottom: 0; }
   #bubble.show { animation: bubble 1.4s ease-out; }
-  .treat { position: absolute; top: 0; left: 0; z-index: 4; width: 30px; will-change: transform; filter: drop-shadow(0 3px 2px #0006); }
-  #glass { position: absolute; inset: 0; z-index: 6; pointer-events: none; border-radius: 6px;
-    background: var(--smudge), var(--scratch), linear-gradient(calc(112deg + var(--tx) * 25deg), #ffffff66 0, #ffffff22 14%, #ffffff00 28%, #ffffff00 62%, #ffffff30 74%, #ffffff00 82%),
-      linear-gradient(180deg, #ffffff2a 0, #ffffff00 22%);
-    box-shadow: inset 0 0 0 1.5px #ffffff88, inset 0 0 14px #9fe8ff55, inset 0 -10px 16px #00000033; }
-  #glass::after { content: ""; position: absolute; left: 7%; top: 8%; width: 3px; height: 70%; background: linear-gradient(180deg, #fff9, #fff0); border-radius: 2px; }
-  /* צינור הנפילה של החטיף מעל המיכל */
-  #chute { position: absolute; z-index: 10; left: 50%; top: -17px; width: 26px; height: 22px; margin-left: -13px; border-radius: 5px 5px 2px 2px; border: 1.5px solid var(--edge);
-    background: linear-gradient(90deg, #7a7ca4, #fff 40%, #9c9ec2 70%, #5a5c86); box-shadow: 0 3px 0 #0008; }
-  #chute::after { content: ""; position: absolute; left: 3px; right: 3px; top: 4px; height: 8px; border-radius: 3px; background: linear-gradient(#1c1a3a, #3a3870); box-shadow: inset 0 1px 3px #000; }
-  #flap { position: absolute; z-index: 11; left: 50%; top: 2px; width: 26px; height: 8px; margin-left: -13px; background: repeating-linear-gradient(45deg, var(--yellow) 0 5px, var(--ink) 5px 10px); border: 1.5px solid var(--ink); border-radius: 0 0 5px 5px; transform-origin: top center; transition: transform .2s; }
-  #flap.open { transform: scaleY(2.2); }
+  .treat { position: absolute; top: 0; left: 0; z-index: 4; width: 5cqw; will-change: transform; filter: drop-shadow(0 .6cqw .5cqw #0007); }
+  #tankImg { position: absolute; left: -1%; top: -3%; width: 102%; height: 106%; z-index: 6; pointer-events: none; }
+  #glass { position: absolute; inset: 0; z-index: 7; pointer-events: none; background: linear-gradient(calc(110deg + var(--tx) * 28deg), #ffffff55 0, #ffffff10 18%, #ffffff00 30%, #ffffff00 62%, #ffffff26 74%, #ffffff00 84%); }
 
   /* ---------- אנימציות ---------- */
   @keyframes blink { 50% { opacity: .15; } }
   @keyframes lampFlicker { 50% { filter: brightness(.82); } }
   @keyframes pop { 0% { opacity: 0; transform: translate(-50%, -50%) rotate(-6deg) scale(.4); } 12% { opacity: 1; transform: translate(-50%, -50%) rotate(-6deg) scale(1.15); } 25% { transform: translate(-50%, -50%) rotate(-6deg) scale(1); } 80% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -64%) rotate(-6deg) scale(1); } }
-  @keyframes run { from { transform: rotate(-30deg); } to { transform: rotate(30deg); } }
-  @keyframes wag { from { transform: rotate(-16deg); } to { transform: rotate(18deg); } }
-  @keyframes hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-26px) rotate(-5deg); } }
+  @keyframes bob { from { transform: translateX(-50%) translateY(0) rotate(-1.2deg); } to { transform: translateX(-50%) translateY(-.9cqw) rotate(1.4deg); } }
+  @keyframes hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-5cqw) rotate(-4deg); } }
   @keyframes bubble { 0% { transform: translateX(-50%) scale(0); } 15%, 80% { transform: translateX(-50%) scale(1); } 100% { transform: translateX(-50%) scale(0); } }
-  @keyframes blinkEye { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
-  @keyframes zz { 0% { opacity: 0; transform: translateY(6px); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(-14px); } }
-  @keyframes waveFlick { to { opacity: .35; } }
   @keyframes marquee { to { transform: translateX(-100%); } }
-  @keyframes shake { 0%, 100% { transform: translate(0); } 25% { transform: translate(-3px, 2px); } 75% { transform: translate(3px, -2px); } }
-  #shell.shake { animation: shake .12s 3; } #shell.thump { animation: shake .09s 2; }
-  @media (prefers-reduced-motion: reduce) { #tickerInner, .leg, .tail { animation-duration: 0s; } }
+  @keyframes shake { 0%, 100% { transform: rotateX(calc(var(--ty) * -4deg)) rotateY(calc(var(--tx) * 5deg)) translate(0); } 25% { transform: rotateX(calc(var(--ty) * -4deg)) rotateY(calc(var(--tx) * 5deg)) translate(-.8cqw, .5cqw); } 75% { transform: rotateX(calc(var(--ty) * -4deg)) rotateY(calc(var(--tx) * 5deg)) translate(.8cqw, -.5cqw); } }
+  @media (prefers-reduced-motion: reduce) { #tickerInner { animation-duration: 0s; } }
 </style>
 </head>
 <body>
 <div id="shell">
-<div id="frame">
-<div id="gadget">
-  <i class="grip l"></i><i class="grip r"></i>
-  <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i><i class="screw s4"></i>
 
-  <div id="top">
-    <div id="brand">
-      <svg id="emblem" viewBox="0 0 64 64">
-        <defs><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff59a"/><stop offset=".5" stop-color="#ffe600"/><stop offset="1" stop-color="#e0a800"/></linearGradient></defs>
-        <path d="M8 14 L18 4 L24 14 M56 14 L46 4 L40 14" fill="#ff1f8e" stroke="#0c0620" stroke-width="3" stroke-linejoin="round"/>
-        <path d="M8 14 C20 18 44 18 56 14 C58 40 46 54 32 60 C18 54 6 40 8 14 Z" fill="url(#gold)" stroke="#0c0620" stroke-width="3.5" stroke-linejoin="round"/>
-        <path d="M35 17 L21 36 H30 L26 52 L44 30 H34 Z" fill="#7b2bff" stroke="#0c0620" stroke-width="2.5" stroke-linejoin="round"/>
-        <path d="M13 17 C24 20 40 20 51 17" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
-      </svg>
-      <span id="title">KORA</span>
-    </div>
-    <div id="grille"></div>
+  <!-- שכבות תחת המעטפת -->
+  <div id="screenBox" class="box">
+    <canvas id="cam"></canvas>
+    <video id="video" autoplay playsinline muted hidden></video>
+    <div id="camTag">LIVE · סלון</div>
     <div class="signal"><i></i><i></i><i></i><i></i></div>
-  </div>
-  <div class="seam"></div>
-
-  <div id="row2">
-    <div id="counter">
-      <div id="clockBtns">
-        <button class="cbtn" id="plus" aria-label="הוסף חטיף"><svg viewBox="0 0 16 16"><path d="M8 2 V14 M2 8 H14" stroke="#0c0620" stroke-width="3.2" stroke-linecap="round"/></svg></button>
-        <button class="cbtn" id="minus" aria-label="הורד חטיף"><svg viewBox="0 0 16 16"><path d="M2 8 H14" stroke="#0c0620" stroke-width="3.2" stroke-linecap="round"/></svg></button>
-      </div>
-      <div id="lcdWin"><div class="lbl">חטיפים<small>נשארו</small></div><div id="digits"></div></div>
-    </div>
-    <div id="lampBox">
-      <div id="lampRing" title="לחץ לבדיקת הנורה">
-        <svg id="lampSvg" viewBox="0 0 100 84">
-          <defs>
-            <linearGradient id="chromeN" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#8a8cb2"/><stop offset=".6" stop-color="#f4f4ff"/><stop offset="1" stop-color="#5a5c86"/></linearGradient>
-            <radialGradient id="lensOffG" cx=".5" cy=".4" r=".75"><stop offset="0" stop-color="#8a2430"/><stop offset=".6" stop-color="#4a0b13"/><stop offset="1" stop-color="#1d0307"/></radialGradient>
-            <radialGradient id="lensOnG" cx=".5" cy=".42" r=".7"><stop offset="0" stop-color="#fffbe8"/><stop offset=".22" stop-color="#ffb4b8"/><stop offset=".5" stop-color="#ff3a52"/><stop offset=".8" stop-color="#e0001f"/><stop offset="1" stop-color="#9c0018"/></radialGradient>
-            <linearGradient id="glossN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".85"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
-          </defs>
-          <!-- מסגרת כרום בצורת חוטם -->
-          <path d="M8 20 C8 6 26 0 50 0 C74 0 92 6 92 20 C92 36 82 54 69 67 C62 74 56 78 50 78 C44 78 38 74 31 67 C18 54 8 36 8 20 Z" fill="url(#chromeN)" stroke="#0c0620" stroke-opacity=".7" stroke-width="1.6" stroke-linejoin="round"/>
-          <path d="M12 21 C12 9 28 4 50 4 C72 4 88 9 88 21 C88 35 78 51 66 63 C60 70 55 73 50 73 C45 73 40 70 34 63 C22 51 12 35 12 21 Z" fill="#1b1740" stroke="#0c0620" stroke-width="1.5"/>
-          <!-- עדשה -->
-          <path class="lensOff" d="M16 21 C16 11 30 7 50 7 C70 7 84 11 84 21 C84 33 75 48 64 59 C59 65 54 69 50 69 C46 69 41 65 36 59 C25 48 16 33 16 21 Z" fill="url(#lensOffG)"/>
-          <path class="glowOn" d="M16 21 C16 11 30 7 50 7 C70 7 84 11 84 21 C84 33 75 48 64 59 C59 65 54 69 50 69 C46 69 41 65 36 59 C25 48 16 33 16 21 Z" fill="url(#lensOnG)"/>
-          <!-- נחיריים ופילטרום -->
-          <path d="M30 45 C26 40 30 33 38 34 C42 36 41 44 36 48 C34 49 32 48 30 45 Z" fill="#12030a" opacity=".92"/>
-          <path d="M70 45 C74 40 70 33 62 34 C58 36 59 44 64 48 C66 49 68 48 70 45 Z" fill="#12030a" opacity=".92"/>
-          <path d="M50 69 V52 M50 52 C46 50 43 51 41 54 M50 52 C54 50 57 51 59 54" fill="none" stroke="#12030a" stroke-width="2.4" stroke-linecap="round" opacity=".85"/>
-          <ellipse class="hotspot" cx="50" cy="24" rx="16" ry="8" fill="#fff" opacity=".35"/>
-          <path d="M22 17 C24 11 36 9 46 9 C40 12 32 16 28 24 C24 24 21 21 22 17 Z" fill="url(#glossN)"/>
-        </svg>
-      </div>
-      <div id="barkNum">00</div>
-    </div>
+    <div id="barkSign">!!ווף</div>
+    <div id="ticker"><span id="tickerInner"></span></div>
   </div>
 
-  <div id="bezel">
-    <div id="screen">
-      <canvas id="cam"></canvas>
-      <video id="video" autoplay playsinline muted hidden></video>
-      <div id="camTag">LIVE · סלון</div>
-      <div id="barkSign">!!ווף</div>
-      <div id="ticker"><span id="tickerInner"></span></div>
+  <div id="counterBox" class="box">
+    <div id="pm">
+      <button class="pmBtn" id="minus" aria-label="הורד חטיף"><img class="up" src="assets/minus_up.webp" alt=""><img class="dn" src="assets/minus_down.webp" alt=""></button>
+      <button class="pmBtn" id="plus" aria-label="הוסף חטיף"><img class="up" src="assets/plus_up.webp" alt=""><img class="dn" src="assets/plus_down.webp" alt=""></button>
     </div>
+    <div id="lcd"><div class="lbl">חטיפים<small>נשארו</small></div><div id="digits"></div></div>
   </div>
 
-  <div id="deck">
-    <i class="dscrew" style="top:5px;left:5px"></i><i class="dscrew" style="top:5px;right:5px"></i><i class="dscrew" style="bottom:5px;left:5px"></i><i class="dscrew" style="bottom:5px;right:5px"></i>
-    <div id="meters">
-      <div id="vuBox"><div id="vu"></div><div id="db">-60</div></div>
-      <div id="gateBox"><input id="gate" type="range" min="0" max="100" value="35" aria-label="שער רעש"><span class="plate" style="align-self:center">רעש</span></div>
-    </div>
-    <div id="buttons">
-      <div class="slot">
-        <div id="audioWell"><button id="audio" aria-label="הפעל שמע">
-          <svg viewBox="0 0 32 32"><path d="M4 12 H10 L18 5 V27 L10 20 H4 Z" fill="#1b1740"/><path class="wave" d="M22 11 Q26 16 22 21 M25 7 Q31 16 25 25" fill="none" stroke="#1b1740" stroke-width="2.6" stroke-linecap="round"/></svg>
-        </button></div>
-        <span class="plate">האזן</span>
-      </div>
-      <div class="slot">
-        <div id="feedWell"><div id="feedRing"></div><button id="feed" aria-label="תן חטיף">
-          <svg viewBox="0 0 64 64"><path d="M14 22 a7 7 0 1 1 9 -5 L41 35 a7 7 0 1 1 5 9 a7 7 0 1 1 -9 5 L19 31 a7 7 0 1 1 -5 -9 Z" fill="#ffe9ef" stroke="#6a0020" stroke-width="3" stroke-linejoin="round"/></svg>
-        </button></div>
-        <span class="plate">האכל</span>
-      </div>
-      <div class="slot">
-        <div id="lever">
-          <div id="leverSlot"></div>
-          <i class="notch" style="top:24%"></i><i class="notch r" style="top:24%"></i><i class="notch" style="top:42%"></i><i class="notch r" style="top:42%"></i>
-          <i class="notch" style="top:60%"></i><i class="notch r" style="top:60%"></i><i class="notch" style="top:78%"></i><i class="notch r" style="top:78%"></i>
-          <div id="leverRod"></div>
-          <div id="leverHandle"></div>
-        </div>
-        <span class="plate">!אל</span>
-      </div>
-    </div>
+  <div id="panelBox" class="box">
+    <div id="vuBox"><div id="vu"></div><div id="db">-60</div></div>
+    <div id="gateBox"><input id="gate" type="range" min="0" max="100" value="35" aria-label="שער רעש"></div>
+    <button id="audioBtn" class="imgBtn" aria-label="הפעל שמע"><img src="assets/audio_off.webp" alt=""><img class="on" src="assets/audio_on.webp" alt=""></button>
+    <div id="feedWrap"><div id="feedRing"></div><button id="feed" aria-label="תן חטיף"></button></div>
+    <div id="lever"><img class="plate" src="assets/lever_plate.webp" alt=""><div id="leverBall"><img src="assets/lever_ball.webp" alt=""></div></div>
   </div>
 
-  <div id="tankHazard"></div>
-  <div id="tankFrame">
-    <i class="ts" style="top:2px;left:2px"></i><i class="ts" style="top:2px;right:2px"></i><i class="ts" style="bottom:2px;left:2px"></i><i class="ts" style="bottom:2px;right:2px"></i>
-    <div id="chute"></div><div id="flap"></div>
-    <div id="tank">
-      <div class="wall"></div><div class="hill h1"></div><div class="hill h2"></div><div id="beam"></div>
-      <div id="floor"></div>
-      <div id="bowl"></div>
-      <svg id="plant" viewBox="0 0 40 44"><defs><linearGradient id="leaf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ed957"/><stop offset="1" stop-color="#2f7d32"/></linearGradient><linearGradient id="pot" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a65a2e"/><stop offset=".5" stop-color="#d98a52"/><stop offset="1" stop-color="#8a4a22"/></linearGradient></defs>
-        <path d="M20 28 C8 24 4 12 6 4 C14 8 20 16 20 28 Z" fill="url(#leaf)" stroke="#1f5a22" stroke-width="1"/><path d="M20 28 C32 24 36 10 32 2 C24 8 20 16 20 28 Z" fill="url(#leaf)" stroke="#1f5a22" stroke-width="1"/><path d="M20 30 C16 20 18 10 20 2 C24 10 24 20 20 30 Z" fill="url(#leaf)" stroke="#1f5a22" stroke-width="1"/>
-        <path d="M9 28 H31 L28 43 H12 Z" fill="url(#pot)" stroke="#4a2410" stroke-width="1.5"/><rect x="8" y="26" width="24" height="5" rx="2" fill="#c47a45" stroke="#4a2410" stroke-width="1.5"/></svg>
-      <div id="dogShadow"></div>
-      <div id="dog">
-        <svg id="dogSvg" viewBox="0 0 170 120">
-          <defs>
-            <linearGradient id="fur" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6b574"/><stop offset=".5" stop-color="#cf8f4a"/><stop offset="1" stop-color="#a9702f"/></linearGradient>
-            <linearGradient id="furFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b87d3d"/><stop offset="1" stop-color="#8a5a24"/></linearGradient>
-            <linearGradient id="belly" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#00000000"/><stop offset=".55" stop-color="#f6e6c4aa"/><stop offset="1" stop-color="#fff2d8"/></linearGradient>
-            <linearGradient id="ear" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a5424"/><stop offset="1" stop-color="#4f2c0e"/></linearGradient>
-            <linearGradient id="muzzle" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7e8cf"/><stop offset="1" stop-color="#e2c79c"/></linearGradient>
-            <radialGradient id="shade" cx=".5" cy=".35" r=".7"><stop offset=".55" stop-color="#3a1c0600"/><stop offset="1" stop-color="#3a1c0666"/></radialGradient>
-            <radialGradient id="iris" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#b9742a"/><stop offset=".6" stop-color="#5e3210"/><stop offset="1" stop-color="#241006"/></radialGradient>
-            <radialGradient id="nose" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#6a6a74"/><stop offset=".4" stop-color="#1c1c22"/><stop offset="1" stop-color="#050507"/></radialGradient>
-            <linearGradient id="red" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5a7e"/><stop offset="1" stop-color="#b0063a"/></linearGradient>
-          </defs>
-          <!-- זנב -->
-          <g class="tail"><path d="M30 62 C14 58 8 40 15 26 C18 36 25 44 36 50 Z" fill="url(#fur)" stroke="#4a2a0e" stroke-width="1.4" stroke-linejoin="round"/><path d="M16 30 q3 8 10 14 M20 28 q4 9 12 16" stroke="#f3cf9b" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".8"/></g>
-          <!-- רגליים רחוקות -->
-          <g class="leg b"><path d="M45 78 C44 90 45 102 46 110 L56 110 C56 100 58 90 58 78 Z" fill="url(#furFar)" stroke="#4a2a0e" stroke-width="1.3"/><path d="M45 104 C45 110 48 114 57 114 C60 114 60 110 57 108 L46 106 Z" fill="#f2dfbd" stroke="#4a2a0e" stroke-width="1.3"/></g>
-          <g class="leg c"><path d="M104 74 C104 88 105 100 106 110 L116 110 C116 100 117 88 117 74 Z" fill="url(#furFar)" stroke="#4a2a0e" stroke-width="1.3"/><path d="M104 104 C104 110 107 114 116 114 C119 114 119 110 116 108 L105 106 Z" fill="#f2dfbd" stroke="#4a2a0e" stroke-width="1.3"/></g>
-          <!-- גוף -->
-          <path d="M28 64 C27 50 44 44 66 46 C84 47 98 44 110 50 L119 76 C114 90 96 92 80 90 C66 89 52 95 40 90 C31 86 29 76 28 64 Z" fill="url(#fur)" stroke="#4a2a0e" stroke-width="1.6" stroke-linejoin="round"/>
-          <path d="M40 90 C52 95 66 89 80 90 C96 92 114 90 119 76 L112 80 C100 86 70 82 40 84 Z" fill="url(#belly)"/>
-          <path d="M28 64 C27 50 44 44 66 46 C84 47 98 44 110 50 L119 76 C114 90 96 92 80 90 C66 89 52 95 40 90 C31 86 29 76 28 64 Z" fill="url(#shade)"/>
-          <path d="M44 56 C52 50 70 50 84 54 C74 60 56 62 44 56 Z" fill="#a8672a" opacity=".55"/>
-          <ellipse cx="46" cy="72" rx="17" ry="19" fill="none" stroke="#8a5320" stroke-width="1.4" opacity=".55"/>
-          <path d="M56 52 q6 -2 12 0 M72 50 q6 -2 12 0 M100 62 q3 8 2 16 M104 58 q4 8 3 18" stroke="#f6d6a0" stroke-width="1.1" fill="none" stroke-linecap="round" opacity=".75"/>
-          <!-- רגליים קרובות -->
-          <g class="leg a"><path d="M32 78 C31 90 32 102 33 110 L44 110 C44 100 46 90 47 78 Z" fill="url(#fur)" stroke="#4a2a0e" stroke-width="1.4"/><path d="M32 104 C32 110 35 115 45 115 C49 115 49 110 45 108 L33 106 Z" fill="#fbecd0" stroke="#4a2a0e" stroke-width="1.4"/><path d="M38 112 v3 M42 112 v3" stroke="#4a2a0e" stroke-width="1"/></g>
-          <g class="leg d"><path d="M113 74 C113 88 114 100 115 110 L126 110 C126 100 127 88 127 74 Z" fill="url(#fur)" stroke="#4a2a0e" stroke-width="1.4"/><path d="M113 104 C113 110 116 115 126 115 C130 115 130 110 126 108 L114 106 Z" fill="#fbecd0" stroke="#4a2a0e" stroke-width="1.4"/><path d="M119 112 v3 M123 112 v3" stroke="#4a2a0e" stroke-width="1"/></g>
-          <!-- אוזן רחוקה -->
-          <path d="M117 18 C126 14 134 22 132 34 C130 40 124 38 120 32 C117 28 115 22 117 18 Z" fill="#5f3513" stroke="#3a1f09" stroke-width="1.2"/>
-          <!-- ראש -->
-          <path d="M100 34 C101 20 116 14 130 21 C140 26 152 36 158 44 C161 50 153 58 142 58 C134 60 126 62 117 60 C106 57 99 46 100 34 Z" fill="url(#fur)" stroke="#4a2a0e" stroke-width="1.6" stroke-linejoin="round"/>
-          <path d="M100 34 C101 20 116 14 130 21 C140 26 152 36 158 44 C161 50 153 58 142 58 C134 60 126 62 117 60 C106 57 99 46 100 34 Z" fill="url(#shade)"/>
-          <path d="M132 38 C143 39 155 43 158 47 C159 53 150 58 141 58 C135 58 131 54 131 47 Z" fill="url(#muzzle)" stroke="#4a2a0e" stroke-width="1.2"/>
-          <ellipse cx="157" cy="45" rx="5.4" ry="4.4" fill="url(#nose)"/><ellipse cx="155.4" cy="43.4" rx="1.8" ry="1.1" fill="#fff" opacity=".85"/>
-          <path d="M153 50 Q147 56 138 55" fill="none" stroke="#4a2a0e" stroke-width="1.6" stroke-linecap="round"/>
-          <g fill="#4a2a0e" opacity=".55"><circle cx="146" cy="47" r=".9"/><circle cx="142" cy="49" r=".9"/><circle cx="147" cy="51" r=".9"/></g>
-          <g class="tongue"><path d="M143 56 C142 63 148 66 150 60 C151 56 148 54 146 55 Z" fill="#ff6f93" stroke="#8a2040" stroke-width="1.2"/><path d="M147 56 V61" stroke="#c43c63" stroke-width="1"/></g>
-          <!-- עין -->
-          <g class="eyeOpen">
-            <path d="M120 36 Q127 29.5 134 36 Q127 41.5 120 36 Z" fill="#fbf3e6" stroke="#2a1405" stroke-width="1.2"/>
-            <circle cx="127.4" cy="35.6" r="4.3" fill="url(#iris)"/><circle cx="127.6" cy="35.6" r="2" fill="#050505"/><circle cx="129.2" cy="33.8" r="1.3" fill="#fff"/><circle cx="125.8" cy="37.4" r=".7" fill="#fff" opacity=".7"/>
-            <path d="M119 36 Q127 28.5 135 36" fill="none" stroke="#2a1405" stroke-width="2" stroke-linecap="round"/>
-          </g>
-          <g class="eyeShut"><path d="M120 37 Q127 31 134 37" fill="none" stroke="#2a1405" stroke-width="2.4" stroke-linecap="round"/></g>
-          <g class="brows"><path d="M119 27 L136 32" stroke="#4a2a0e" stroke-width="3" stroke-linecap="round"/></g>
-          <ellipse cx="126" cy="27" rx="4" ry="2" fill="#f1c88e" opacity=".8"/>
-          <!-- אוזן קרובה -->
-          <path d="M104 20 C94 20 88 34 91 50 C94 60 105 58 110 47 C113 38 112 25 104 20 Z" fill="url(#ear)" stroke="#2f1807" stroke-width="1.4" stroke-linejoin="round"/>
-          <path d="M101 28 C97 36 97 46 100 52" fill="none" stroke="#a8743c" stroke-width="1.2" opacity=".55" stroke-linecap="round"/>
-          <!-- קולר -->
-          <path d="M98 50 C106 56 116 60 124 58 L123 66 C114 69 104 64 97 57 Z" fill="url(#red)" stroke="#4a0015" stroke-width="1.4" stroke-linejoin="round"/>
-          <circle cx="110" cy="70" r="4.4" fill="#ffd34d" stroke="#6a4a00" stroke-width="1.3"/><circle cx="109" cy="68.8" r="1.3" fill="#fff" opacity=".8"/>
-          <g class="zzz"><text x="124" y="10" font-size="14" font-weight="900" fill="#3a0fb0" font-family="Impact,sans-serif">Z</text><text x="136" y="0" font-size="10" font-weight="900" fill="#3a0fb0" font-family="Impact,sans-serif">z</text></g>
-        </svg>
-        <div id="bubble">ווף!</div>
+  <div id="tankBox" class="box">
+    <div id="tankScene"><div class="beam"></div><div class="floor"></div></div>
+    <div id="dogShadow"></div>
+    <div id="dog" data-s="sit">
+      <div id="dogFlip">
+        <img class="s-stand" src="assets/dog_stand.webp" alt=""><img class="s-sit" src="assets/dog_sit.webp" alt="">
+        <img class="s-happy" src="assets/dog_sit_happy.webp" alt=""><img class="s-sleep" src="assets/dog_sleep.webp" alt="">
       </div>
-      <div id="glass"></div>
+      <div id="bubble">ווף!</div>
     </div>
+    <img id="tankImg" src="assets/tank.webp" alt="">
+    <div id="glass"></div>
   </div>
-</div>
-</div>
+
+  <!-- תמונת המעטפת מעל הכל, ומעליה נורה, סמל ושלט -->
+  <img id="shellImg" src="assets/shell.webp" alt="">
+  <div id="sheen"></div>
+  <div id="lampWrap" title="לחץ לבדיקת הנורה"><img src="assets/lamp_off.webp" alt=""><img class="on" src="assets/lamp_on.webp" alt=""></div>
+  <svg id="emblem" viewBox="0 0 64 64">
+    <defs><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff59a"/><stop offset=".5" stop-color="#ffe600"/><stop offset="1" stop-color="#e0a800"/></linearGradient></defs>
+    <path d="M8 14 L18 4 L24 14 M56 14 L46 4 L40 14" fill="#ff1f8e" stroke="#0c0620" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M8 14 C20 18 44 18 56 14 C58 40 46 54 32 60 C18 54 6 40 8 14 Z" fill="url(#gold)" stroke="#0c0620" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M35 17 L21 36 H30 L26 52 L44 30 H34 Z" fill="#7b2bff" stroke="#0c0620" stroke-width="2.5" stroke-linejoin="round"/>
+  </svg>
+  <div id="nameplate">KORA</div>
 </div>
 
 <script>
@@ -473,11 +274,9 @@
   function renderCounter() {
     const n = Math.max(0, Math.min(99, state.treats));
     $('digits').innerHTML = digitSVG(Math.floor(n / 10)) + digitSVG(n % 10);
-    $('counter').classList.toggle('empty', n === 0);
+    $('counterBox').classList.toggle('empty', n === 0);
     $('feed').disabled = n === 0 || state.cooling;
-    $('barkNum').textContent = String(state.barks).padStart(2, '0');
   }
-  // כפתורי פלוס/מינוס של השעון: לתיקון ספירת המחסנית ידנית
   const adjust = (d) => { state.treats = Math.max(0, Math.min(99, state.treats + d)); sfx.cclick(); buzz(10); renderCounter(); };
   $('plus').addEventListener('click', () => adjust(1));
   $('minus').addEventListener('click', () => adjust(-1));
@@ -501,29 +300,33 @@
     $('db').textContent = Math.round(-60 + state.level * 60);
     if (state.level > 0.3) lastLoud = Date.now();
     if (state.level > 0.82 && !barking) bark(false);
-    updateMood();
+    setSprite();
     requestAnimationFrame(levelTick);
   }
 
-  /* ---------- נביחה: נורה פיזית, שלט ובועה ---------- */
+  /* ---------- נביחה: נורת חוטם, שלט ובועה ---------- */
   let barking = false, barkTimer = 0;
   function bark(sound) {
-    if (barking) return; barking = true; state.barks++; renderCounter();
-    $('lampRing').classList.add('on'); shell.classList.add('shake');
+    if (barking) return; barking = true; state.barks++;
+    $('lampWrap').classList.add('on'); shell.classList.add('shake');
     const sign = $('barkSign'); sign.classList.remove('show'); void sign.offsetWidth; sign.classList.add('show');
-    say('🚨 זוהתה נביחה! בודק אם יש חתול בסביבה...');
+    say('🚨 זוהתה נביחה #' + state.barks + '! בודק אם יש חתול בסביבה...');
     speak(['ווף!', 'האו!', 'הב הב!', 'גררר'][Math.floor(Math.random() * 4)]);
     if (state.audioOn && sound) sfx.bark(); buzz([60, 40, 60]);
     setTimeout(() => shell.classList.remove('shake'), 420);
-    clearTimeout(barkTimer); barkTimer = setTimeout(() => { $('lampRing').classList.remove('on'); barking = false; }, 4500);
+    clearTimeout(barkTimer); barkTimer = setTimeout(() => { $('lampWrap').classList.remove('on'); barking = false; }, 4500);
   }
-  $('lampRing').addEventListener('click', () => { state.spike = 1; bark(true); }); // בדיקת הנורה
+  $('lampWrap').addEventListener('click', () => { state.spike = 1; bark(true); }); // בדיקת הנורה
 
-  /* ---------- הכלבלב: מצב רוח ---------- */
+  /* ---------- הכלבלב: מצב ---------- */
   const dog = $('dog');
-  function updateMood() {
-    const cls = barking ? 'angry' : Date.now() - lastFeed < 9000 ? 'happy' : Date.now() - lastLoud > 35000 ? 'sleep' : '';
-    ['angry', 'happy', 'sleep'].forEach((c) => dog.classList.toggle(c, c === cls));
+  let moving = false, pause = 0;
+  function setSprite() {
+    const mood = barking ? 'angry' : Date.now() - lastFeed < 9000 ? 'happy' : Date.now() - lastLoud > 35000 ? 'sleep' : '';
+    let s = 'sit';
+    if (mood === 'sleep') s = 'sleep'; else if (mood === 'happy') s = 'happy'; else if (mood === 'angry' || moving) s = 'stand';
+    if (dog.dataset.s !== s) dog.dataset.s = s;
+    dog.classList.toggle('walk', moving && !mood); dog.classList.toggle('angry', mood === 'angry');
   }
   function speak(txt) { const b = $('bubble'); b.textContent = txt; b.classList.remove('show'); void b.offsetWidth; b.classList.add('show'); }
 
@@ -534,25 +337,26 @@
     const start = performance.now(), ring = $('feedRing');
     const prog = () => { const p = Math.min(1, (performance.now() - start) / 2600); ring.style.setProperty('--p', (p * 100) + '%'); if (p < 1) requestAnimationFrame(prog); else { ring.style.setProperty('--p', '0%'); } };
     prog();
-    $('flap').classList.add('open'); setTimeout(dropTreat, 450); setTimeout(() => $('flap').classList.remove('open'), 900);
+    setTimeout(dropTreat, 450);
     setTimeout(() => { state.cooling = false; renderCounter(); }, 2700);
     say(state.treats === 0 ? '⚠️ המחסנית ריקה — צריך למלא' : '🦴 חטיף בדרך! הכלבה כבר מריחה אותו...');
   });
 
   /* ---------- כפתור שמע ---------- */
-  $('audio').addEventListener('click', () => {
+  $('audioBtn').addEventListener('click', () => {
     state.audioOn = !state.audioOn; ctx();
-    $('audioWell').classList.toggle('on', state.audioOn);
+    $('audioBtn').classList.toggle('active', state.audioOn);
     state.audioOn ? sfx.on() : sfx.off(); buzz(25);
     window.Kora && Kora.onListen && Kora.onListen(state.audioOn);
   });
 
   /* ---------- ידית משיכה (לא עושה כלום, אבל מרגישה מצוין) ---------- */
-  const lever = $('lever'), handle = $('leverHandle'), rod = $('leverRod');
+  const lever = $('lever'), ball = $('leverBall');
+  const GEOM = { c0: 0.075, c1: 0.835 };                       // מרכז הכדור כשבר מגובה הצלחת: למעלה / למטה
   let drag = null, curY = 0, lastN = 0, latched = false;
-  const maxY = () => lever.clientHeight - handle.offsetHeight - 16;
-  const setY = (y) => { curY = y; handle.style.transform = `translateY(${y}px)`; rod.style.transform = `scaleY(${1 + y / 24})`; };
-  const cls = (add, remove) => { [handle, rod].forEach((e) => { remove.forEach((c) => e.classList.remove(c)); add.forEach((c) => e.classList.add(c)); }); };
+  const travel = () => (GEOM.c1 - GEOM.c0) * lever.offsetHeight;
+  const setY = (y) => { curY = y; ball.style.transform = `translateY(${y}px)`; };
+  const restTop = () => { ball.style.top = (GEOM.c0 * lever.offsetHeight - ball.offsetHeight / 2) + 'px'; };
   function pulledThrough() {
     if (latched) return; latched = true; state.pulls++; sfx.clunk(); buzz([30, 30, 80]);
     shell.classList.remove('thump'); void shell.offsetWidth; shell.classList.add('thump');
@@ -560,49 +364,51 @@
     if (state.pulls === 20) say('🏆 הישג נפתח: מושך ידיות מקצועי');
   }
   function release() {
-    const p = curY / Math.max(1, maxY()); cls(['spring'], ['drag', 'auto']);
+    const p = curY / Math.max(1, travel()); ball.classList.remove('drag', 'auto'); ball.classList.add('spring');
     if (p > 0.05) sfx.sproing(p); setY(0); lastN = 0; latched = false;
-    setTimeout(() => cls([], ['spring']), 600);
+    setTimeout(() => ball.classList.remove('spring'), 600);
   }
-  handle.addEventListener('pointerdown', (e) => { drag = { y0: e.clientY, off: curY, moved: 0 }; handle.setPointerCapture(e.pointerId); cls(['drag'], ['spring', 'auto']); e.preventDefault(); });
-  handle.addEventListener('pointermove', (e) => {
-    if (!drag) return; const dy = e.clientY - drag.y0; drag.moved = Math.max(drag.moved, Math.abs(dy));
-    const y = Math.max(0, Math.min(maxY(), drag.off + dy)); setY(y);
-    const p = y / maxY(), n = Math.floor(p * 8);
+  ball.addEventListener('pointerdown', (e) => { drag = { y0: e.clientY, off: curY, moved: 0 }; ball.setPointerCapture(e.pointerId); ball.classList.remove('spring', 'auto'); ball.classList.add('drag'); e.preventDefault(); });
+  ball.addEventListener('pointermove', (e) => {
+    if (!drag) return; const k = shell.getBoundingClientRect().height / shell.offsetHeight || 1;
+    const dy = (e.clientY - drag.y0) / k; drag.moved = Math.max(drag.moved, Math.abs(dy));
+    const y = Math.max(0, Math.min(travel(), drag.off + dy)); setY(y);
+    const p = y / travel(), n = Math.floor(p * 8);
     if (n !== lastN) { if (n > lastN) sfx.tick(n); else sfx.tick(Math.max(0, n - 2)); buzz(8); lastN = n; }
     if (p >= 0.96) pulledThrough(); else if (p < 0.7) latched = false;
   });
   const endDrag = () => { if (!drag) return; const moved = drag.moved; drag = null; if (moved < 6 && curY < 4) autoPull(); else release(); };
-  handle.addEventListener('pointerup', endDrag); handle.addEventListener('pointercancel', endDrag);
-  function autoPull() { cls(['auto'], ['drag', 'spring']); setY(maxY()); sfx.tick(3); setTimeout(pulledThrough, 170); setTimeout(release, 330); }
+  ball.addEventListener('pointerup', endDrag); ball.addEventListener('pointercancel', endDrag);
+  function autoPull() { ball.classList.remove('drag', 'spring'); ball.classList.add('auto'); setY(travel()); sfx.tick(3); setTimeout(pulledThrough, 170); setTimeout(release, 330); }
+  new ResizeObserver(restTop).observe(lever); window.addEventListener('load', restTop);
 
-  /* ---------- הכלבלב רץ במיכל ---------- */
-  const tank = $('tank'), dogSvg = $('dogSvg'), shadow = $('dogShadow');
-  let dx = 30, dir = 1, pause = 0, target = null, last = performance.now();
+  /* ---------- הכלבלב במיכל ---------- */
+  const tank = $('tankBox'), dogFlip = $('dogFlip'), shadow = $('dogShadow');
+  let dx = 0.3, dir = 1, target = null, last = performance.now();                 // dx: מיקום מרכז הכלב כשבר מרוחב המיכל
+  const XMIN = 0.2, XMAX = 0.8;
   function dropTreat() {
     const el = document.createElement('div'); el.className = 'treat';
     el.innerHTML = '<svg viewBox="0 0 44 26"><defs><linearGradient id="bk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1c47e"/><stop offset=".6" stop-color="#c98d44"/><stop offset="1" stop-color="#8e5a22"/></linearGradient></defs><path d="M7 6 a5.5 5.5 0 1 1 6.5 -3 L30 9 a5.5 5.5 0 1 1 6.5 6.5 a5.5 5.5 0 1 1 -6.5 3.5 L13 17 a5.5 5.5 0 1 1 -6.5 -11 Z" fill="url(#bk)" stroke="#5a3410" stroke-width="1.6" stroke-linejoin="round"/><path d="M13 8 L30 11" stroke="#ffe5b0" stroke-width="1.4" opacity=".7" stroke-linecap="round"/></svg>';
-    const x = tank.clientWidth / 2 - 15, fy = tank.clientHeight * 0.74; tank.appendChild(el);
-    el.animate([{ transform: `translate(${x}px,-20px) rotate(0)` }, { transform: `translate(${x}px,${fy}px) rotate(500deg)`, offset: .78 }, { transform: `translate(${x}px,${fy - 10}px) rotate(560deg)`, offset: .88 }, { transform: `translate(${x}px,${fy}px) rotate(600deg)` }], { duration: 760, easing: 'cubic-bezier(.5,0,1,.6)', fill: 'forwards' });
-    target = { el, x: tank.clientWidth / 2 };
+    tank.appendChild(el);
+    const w = tank.clientWidth, h = tank.clientHeight, x = w * 0.5 - el.offsetWidth / 2, fy = h * 0.66;
+    el.animate([{ transform: `translate(${x}px,${h * 0.1}px) rotate(0)` }, { transform: `translate(${x}px,${fy}px) rotate(500deg)`, offset: .78 }, { transform: `translate(${x}px,${fy - h * .1}px) rotate(560deg)`, offset: .88 }, { transform: `translate(${x}px,${fy}px) rotate(600deg)` }], { duration: 760, easing: 'cubic-bezier(.5,0,1,.6)', fill: 'forwards' });
+    target = { el, x: 0.5 };
   }
   function dogTick(now) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
-    const dw = dog.offsetWidth, maxX = tank.clientWidth - dw - 6, sleeping = dog.classList.contains('sleep');
-    if (pause > 0 || sleeping) { pause -= dt; dog.classList.add('sit'); if (sleeping && pause <= 0) pause = 0; }
-    else {
-      dog.classList.remove('sit');
-      if (target) {
-        const to = target.x - dw * 0.78; dir = to > dx ? 1 : -1; dx += dir * 190 * dt;
-        if (Math.abs(to - dx) < 12) { target.el.remove(); target = null; sfx.crunch(); pause = 1.8; dog.classList.remove('jump'); void dog.offsetWidth; dog.classList.add('jump'); speak('נחמד!'); }
-      } else {
-        dx += dir * 60 * dt;
-        if (dx > maxX) { dx = maxX; dir = -1; } if (dx < 6) { dx = 6; dir = 1; }
-        if (Math.random() < dt * 0.1) pause = 1 + Math.random() * 1.8;
-      }
+    const sleeping = dog.dataset.s === 'sleep';
+    if (pause > 0 || sleeping) { pause -= dt; moving = false; }
+    else if (target) {
+      const to = target.x - 0.09 * dir; dir = to > dx ? 1 : -1; dx += dir * 0.55 * dt; moving = true;
+      if (Math.abs(to - dx) < 0.025) { target.el.remove(); target = null; moving = false; sfx.crunch(); pause = 1.8; dog.classList.remove('jump'); void dog.offsetWidth; dog.classList.add('jump'); speak('נחמד!'); }
+    } else {
+      moving = true; dx += dir * 0.16 * dt;
+      if (dx > XMAX) { dx = XMAX; dir = -1; } if (dx < XMIN) { dx = XMIN; dir = 1; }
+      if (Math.random() < dt * 0.11) pause = 1 + Math.random() * 2;
     }
-    dog.style.transform = `translateX(${dx}px)`; dogSvg.style.transform = `scaleX(${dir})`;
-    shadow.style.width = dw * 0.7 + 'px'; shadow.style.transform = `translateX(${dx + dw * 0.14}px)`;
+    const W = tank.clientWidth;
+    dog.style.transform = `translateX(${dx * W}px)`; dogFlip.style.transform = `scaleX(${dir})`;
+    shadow.style.transform = `translateX(${dx * W - shadow.offsetWidth / 2}px)`;
     requestAnimationFrame(dogTick);
   }
 
@@ -629,16 +435,7 @@
   const renderTicker = () => { $('tickerInner').textContent = [...tickerQueue.slice(0, 2), ...tickerMsgs].join('   ★   '); };
   document.addEventListener('keydown', (e) => { if (e.key === 'b') { state.spike = 1; bark(true); } });
 
-  /* ---------- נקודות חיבור לחיבור האמיתי (בהמשך) ----------
-     Kora.onListen(on)  — להפעיל/להשתיק את השמע של ה-WebRTC
-     Kora.onGate(0..1)  — לכוון שער רעש ב-Web Audio
-     להזנת מד אמיתי: DEMO=false; state.level = ...; ובנביחה אמיתית: bark(false) */
-  window.Kora = { onListen: null, onGate: null };
-  $('gate').addEventListener('input', () => { window.Kora && Kora.onGate && Kora.onGate($('gate').value / 100); });
-
-  /* ---------- אשליה פיזית: המכשיר נוטה וההבהקים זזים עם הטלפון ----------
-     iOS דורש אישור חד-פעמי לחיישן התנועה, שנשאל בנגיעה הראשונה. בלי חיישן (מחשב): עוקב אחרי העכבר,
-     ואם אין שום קלט — נדנוד עדין כדי שהמכשיר ירגיש "חי". */
+  /* ---------- אשליה פיזית: נטייה והבהקים שזזים עם הטלפון ---------- */
   const root = document.documentElement, clamp = (v) => Math.max(-1, Math.min(1, v));
   const want = { x: 0, y: 0 }, cur = { x: 0, y: 0 }; let lastInput = 0, hasSensor = false;
   window.addEventListener('deviceorientation', (e) => { if (e.gamma == null) return; hasSensor = true; lastInput = performance.now(); want.x = clamp(e.gamma / 22); want.y = clamp((e.beta - 55) / 22); });
@@ -646,14 +443,20 @@
   document.addEventListener('click', () => { try { if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') DeviceOrientationEvent.requestPermission().catch(() => {}); } catch (e) {} }, { once: true });
   function tiltTick(now) {
     if (!hasSensor && now - lastInput > 2500) { want.x = Math.sin(now / 2600) * 0.32; want.y = Math.cos(now / 3300) * 0.22; }
-    const k = 0.1, nx = cur.x + (want.x - cur.x) * k, ny = cur.y + (want.y - cur.y) * k;
+    const nx = cur.x + (want.x - cur.x) * 0.1, ny = cur.y + (want.y - cur.y) * 0.1;
     if (Math.abs(nx - cur.x) > 0.0008 || Math.abs(ny - cur.y) > 0.0008) { cur.x = nx; cur.y = ny; root.style.setProperty('--tx', nx.toFixed(3)); root.style.setProperty('--ty', ny.toFixed(3)); }
     requestAnimationFrame(tiltTick);
   }
-  requestAnimationFrame(tiltTick);
+
+  /* ---------- נקודות חיבור לחיבור האמיתי (בהמשך) ----------
+     Kora.onListen(on)  — להפעיל/להשתיק את השמע של ה-WebRTC
+     Kora.onGate(0..1)  — לכוון שער רעש ב-Web Audio
+     להזנת מד אמיתי: DEMO=false; state.level = ...; ובנביחה אמיתית: bark(false) */
+  window.Kora = { onListen: null, onGate: null };
+  $('gate').addEventListener('input', () => { window.Kora && Kora.onGate && Kora.onGate($('gate').value / 100); });
 
   renderCounter(); renderTicker();
-  requestAnimationFrame(levelTick); requestAnimationFrame(dogTick); requestAnimationFrame(camTick);
+  requestAnimationFrame(levelTick); requestAnimationFrame(dogTick); requestAnimationFrame(camTick); requestAnimationFrame(tiltTick);
 })();
 </script>
 </body>

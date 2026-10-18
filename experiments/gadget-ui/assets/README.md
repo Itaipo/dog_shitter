@@ -13,13 +13,13 @@
 |---|---|---|
 | כפתור האכלה — רגיל | `feed_up.webp` (מקור: `source/feed_up_original.png`) | ✅ נוצר ומשולב (2026-10-18). מצב לחוץ מדומה ב-CSS |
 | כפתור האכלה — לחוץ | `feed_down.webp` (מקור: `source/feed_down_original.png`) | ✅ נוצר ומשולב; הכפתור נשאר לחוץ בזמן ההכנה/ריקון |
-| כפתור שמע (כבוי/דולק) | — | ⏳ חסר |
-| פלוס/מינוס של השעון | — | ⏳ חסר |
-| ידית משיכה (+ למטה) | — | ⏳ חסר |
-| נורת חוטם (כבויה/דולקת) | — | ⏳ חסר |
-| מעטפת המכשיר | — | ⏳ חסר (להתחיל ממנה כדי לקבוע סגנון) |
-| מיכל זכוכית | — | ⏳ חסר |
-| כלבלב (עומד/יושב/שמח/ישן) | — | ⏳ חסר |
+| כפתור שמע (כבוי/דולק) | `audio_off.webp`, `audio_on.webp` | ✅ נוצר ומשולב |
+| פלוס/מינוס של השעון | `plus_up/down.webp`, `minus_up/down.webp` | ✅ נוצר (זוג בתמונה אחת, פוצל) ומשולב |
+| ידית משיכה | `lever_plate.webp` + `lever_ball.webp` | ⚠️ משולב בעקיפין: התמונה המקורית כללה כדור, מוט והילה צרובה; הופרדו בקוד (`tools/process_assets.py`). מומלץ לבקש מחדש: צלחת ריקה וכדור בנפרד |
+| נורת חוטם (כבויה/דולקת) | `lamp_off.webp`, `lamp_on.webp` | ✅ נוצר ומשולב (ההילה האדומה הצרובה הוסרה והוחלפה בזוהר CSS) |
+| מעטפת המכשיר | `shell.webp` | ✅ נוצר ומשולב; ארבעה חלונות ריקים (מסך, מונה, לוח בקרה, מיכל) |
+| מיכל זכוכית | `tank.webp` | ✅ משולב אחרי ניקוי (שאריות "משבצות שקיפות" מעל המכסה ובתוך הזכוכית נמחקו) |
+| כלבלב (עומד/יושב/שמח/ישן) | `dog_stand/sit/sit_happy/sleep.webp` | ✅ נוצר ומשולב (הילה צרובה הוסרה). חסרים פריימי ריצה — ההליכה מדומה בקפיצה קלה |
 
 ## פרומפטים
 **כפתור האכלה (נוצר):** `[כותרת] A large round arcade push-button seen from the front: translucent glossy hot-pink/red plastic dome with a soft inner glow and a sharp specular highlight, set in a knurled brushed-aluminium bezel ring with a dark inner gap. Square 1024x1024.` — לחוץ: `Same button, but pressed down: the dome sits lower in the bezel, highlight softer, less shadow.`
