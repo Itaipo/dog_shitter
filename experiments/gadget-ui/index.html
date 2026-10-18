@@ -9,6 +9,8 @@
 <meta name="apple-mobile-web-app-title" content="Kora">
 <meta name="theme-color" content="#2b0a8f">
 <title>Kora Gadget</title>
+<link rel="preload" as="image" href="assets/feed_up.webp">
+<link rel="preload" as="image" href="assets/feed_down.webp">
 <!--
   ניסוי עיצוב בלבד (D-045): כל הנתונים כאן מדומים, אין חיבור ל-Pi.
   החיבור האמיתי יתחבר בסוף הקובץ דרך window.Kora (ראו "נקודות חיבור").
@@ -146,8 +148,8 @@
   #feed::after { content: ""; position: absolute; inset: 14%; border-radius: 50%; pointer-events: none; mix-blend-mode: screen; opacity: .55;
     background: radial-gradient(circle at calc(34% + var(--tx) * 14%) calc(26% + var(--ty) * 12%), #ffffff90 0, #ffffff00 38%); }
   #feed svg { position: relative; z-index: 1; width: 34%; height: 34%; filter: drop-shadow(0 1px 0 #ffffff66) drop-shadow(0 -1px 1px #0009); opacity: .72; mix-blend-mode: soft-light; }
-  #feed:active:not(:disabled) { transform: translateY(7px) scale(.955); filter: brightness(.86) drop-shadow(0 2px 2px #000a) drop-shadow(0 1px 1px #000); }
-  #feed:disabled { filter: saturate(.45) brightness(.7) drop-shadow(0 6px 4px #0008); cursor: default; }
+  #feed:active:not(:disabled) { background-image: url("assets/feed_down.webp"); transform: translateY(3px); filter: drop-shadow(0 3px 2px #000a) drop-shadow(0 1px 1px #000); }
+  #feed:disabled { background-image: url("assets/feed_down.webp"); transform: translateY(3px); filter: saturate(.7) brightness(.8) drop-shadow(0 3px 2px #000a); cursor: default; } /* בזמן ההכנה הכפתור נשאר לחוץ */
 
   /* שמע: כפתור מתכת מחורץ עם טבעת LED */
   #audioWell { position: relative; width: clamp(60px, 9.4dvh, 78px); aspect-ratio: 1; border-radius: 50%; padding: 7px; border: 2px solid var(--edge); background: repeating-conic-gradient(#cfd1e8 0 3deg, #62648c 3deg 6deg); box-shadow: 0 6px 0 #0009, 0 9px 8px #0006, inset 0 0 0 4px #14152e; }
