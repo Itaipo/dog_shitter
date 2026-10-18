@@ -138,19 +138,16 @@
   .slot { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; }
   .plate { font: 800 9px/1 system-ui; letter-spacing: 1.5px; color: #1b1740; background: linear-gradient(#e8e8f6, #a6a8c8); padding: 3px 8px; border-radius: 3px; border: 1px solid #0006; box-shadow: 0 1px 0 #fff6, inset 0 1px 0 #fffb; }
 
-  /* האכלה: כיפת פלסטיק שקופה על אוגן מתכת מחורץ */
-  #feedWell { position: relative; width: calc(var(--dome) + 26px); height: calc(var(--dome) + 26px); border-radius: 50%; padding: 12px; border: 2px solid var(--edge);
-    background: repeating-conic-gradient(#d9dbf0 0 3deg, #6c6e96 3deg 6deg); box-shadow: 0 7px 0 #0009, 0 10px 10px #0006, inset 0 0 0 4px #1b1c3a; }
-  #feedWell::before { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: conic-gradient(from calc(30deg + var(--tx) * 50deg), #fafaff, #8586ac, #fff, #7b7da6, #fafaff); box-shadow: 0 0 0 2px var(--ink), inset 0 0 0 2px #ffffffaa; }
-  #feedRing { position: absolute; inset: 8px; border-radius: 50%; z-index: 1; background: conic-gradient(var(--yellow) var(--p, 0%), transparent 0); -webkit-mask: radial-gradient(circle, transparent 69%, #000 71%); mask: radial-gradient(circle, transparent 69%, #000 71%); }
-  #feed { position: relative; z-index: 2; display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; border: 2px solid #4a0015; padding: 0; cursor: pointer; overflow: hidden;
-    background: radial-gradient(circle at 50% 80%, #ff9fba 0, #ff3a78 22%, #d10a4a 55%, #8a0030 88%, #5a001f 100%);
-    box-shadow: 0 10px 0 #4a0015, 0 14px 12px #000a, inset 0 -12px 16px #00000066, inset 0 8px 10px #ffffff80, inset 0 0 0 4px #ff6b9a66; transition: transform .06s, box-shadow .06s; }
-  #feed::before { content: ""; position: absolute; left: 50%; bottom: 8%; width: 56%; height: 34%; margin-left: -28%; border-radius: 50%; background: radial-gradient(circle, #ffd0de88, transparent 70%); }
-  #feed::after { content: ""; position: absolute; translate: calc(var(--tx) * 6px) calc(var(--ty) * 4px); left: 14%; top: 6%; width: 50%; height: 30%; border-radius: 50%; background: linear-gradient(#ffffffd0, #ffffff10); transform: rotate(-20deg); }
-  #feed svg { position: relative; z-index: 1; width: 40%; height: 40%; filter: drop-shadow(0 1px 0 #ffffff55) drop-shadow(0 -1px 0 #0008); opacity: .9; }
-  #feed:active:not(:disabled) { transform: translateY(8px); box-shadow: 0 2px 0 #4a0015, 0 4px 6px #000a, inset 0 -7px 10px #00000066, inset 0 6px 8px #ffffff66, inset 0 0 0 4px #ff6b9a66; }
-  #feed:disabled { filter: saturate(.45) brightness(.7); cursor: default; }
+  /* האכלה: תמונה אמיתית (נוצרה ב-GPT, assets/feed_up.webp). מצב לחוץ: ירידה, כהות וצל קטן */
+  #feedWell { position: relative; width: calc(var(--dome) + 30px); height: calc(var(--dome) + 30px); }
+  #feedRing { position: absolute; inset: -3px; border-radius: 50%; z-index: 1; pointer-events: none; background: conic-gradient(var(--yellow) var(--p, 0%), transparent 0); -webkit-mask: radial-gradient(circle, transparent 66%, #000 68%); mask: radial-gradient(circle, transparent 66%, #000 68%); filter: drop-shadow(0 0 4px #ffe600aa); }
+  #feed { position: relative; z-index: 2; display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; border: 0; padding: 0; cursor: pointer; background: url("assets/feed_up.webp") center / contain no-repeat;
+    filter: drop-shadow(0 9px 5px #000a) drop-shadow(0 2px 1px #000); transition: transform .06s, filter .06s; }
+  #feed::after { content: ""; position: absolute; inset: 14%; border-radius: 50%; pointer-events: none; mix-blend-mode: screen; opacity: .55;
+    background: radial-gradient(circle at calc(34% + var(--tx) * 14%) calc(26% + var(--ty) * 12%), #ffffff90 0, #ffffff00 38%); }
+  #feed svg { position: relative; z-index: 1; width: 34%; height: 34%; filter: drop-shadow(0 1px 0 #ffffff66) drop-shadow(0 -1px 1px #0009); opacity: .72; mix-blend-mode: soft-light; }
+  #feed:active:not(:disabled) { transform: translateY(7px) scale(.955); filter: brightness(.86) drop-shadow(0 2px 2px #000a) drop-shadow(0 1px 1px #000); }
+  #feed:disabled { filter: saturate(.45) brightness(.7) drop-shadow(0 6px 4px #0008); cursor: default; }
 
   /* שמע: כפתור מתכת מחורץ עם טבעת LED */
   #audioWell { position: relative; width: clamp(60px, 9.4dvh, 78px); aspect-ratio: 1; border-radius: 50%; padding: 7px; border: 2px solid var(--edge); background: repeating-conic-gradient(#cfd1e8 0 3deg, #62648c 3deg 6deg); box-shadow: 0 6px 0 #0009, 0 9px 8px #0006, inset 0 0 0 4px #14152e; }
