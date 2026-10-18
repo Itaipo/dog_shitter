@@ -83,7 +83,7 @@
 
   /* לוח הבקרה */
   #panelBox { background: repeating-linear-gradient(90deg, #ffffff0a 0 1px, #0000 1px 3px), linear-gradient(calc(180deg + var(--tx) * 14deg), #4f5178 0%, #2a2c48 60%, #383a5c 100%); }
-  #vuBox { position: absolute; left: 4%; top: 4.5%; width: 57%; height: 15%; display: flex; align-items: center; gap: 1.4cqw; padding: .8cqw 1.6cqw; background: #06030d; border: .4cqw solid #14142c; border-radius: 1.6cqw; box-shadow: inset 0 0 2cqw #000, 0 .3cqw 0 #ffffff33; }
+  #vuBox { position: absolute; left: 4%; top: 4.5%; width: 50%; height: 15%; display: flex; align-items: center; gap: 1.4cqw; padding: .8cqw 1.6cqw; background: #06030d; border: .4cqw solid #14142c; border-radius: 1.6cqw; box-shadow: inset 0 0 2cqw #000, 0 .3cqw 0 #ffffff33; }
   #vuBox::after { content: ""; position: absolute; inset: 0; border-radius: 1.2cqw; pointer-events: none; background: linear-gradient(160deg, #ffffff22 0, #ffffff00 42%); }
   #vu { flex: 1; display: grid; grid-template-columns: repeat(14, 1fr); gap: .5cqw; direction: ltr; height: 100%; align-items: end; }
   #vu i { display: block; height: 100%; border-radius: .4cqw; background: #2a2144; }
@@ -92,7 +92,7 @@
   #vu i.on:nth-child(n+9) { background: var(--yellow); box-shadow: 0 0 1.2cqw var(--yellow); }
   #vu i.on:nth-child(n+12) { background: var(--red); box-shadow: 0 0 1.4cqw var(--red); }
   #db { width: 6cqw; text-align: left; font: 800 2.3cqw "Courier New", monospace; color: var(--lcd); direction: ltr; unicode-bidi: isolate; text-shadow: 0 0 1.2cqw var(--lcd); }
-  #gateBox { position: absolute; left: 66%; top: 4.5%; width: 30%; height: 15%; display: flex; align-items: center; }
+  #gateBox { position: absolute; left: 57%; top: 4.5%; width: 19%; height: 15%; display: flex; align-items: center; }
   #gate { -webkit-appearance: none; appearance: none; width: 100%; height: 100%; background: transparent; margin: 0; }
   #gate::-webkit-slider-runnable-track { height: 1.9cqw; border-radius: 1cqw; background: linear-gradient(90deg, #05030f, #2a2144); border: .35cqw solid #12122a; box-shadow: inset 0 .4cqw .6cqw #000, 0 .2cqw 0 #ffffff33; }
   #gate::-webkit-slider-thumb { -webkit-appearance: none; width: 4.4cqw; height: 6.6cqw; margin-top: -2.6cqw; border-radius: 1cqw; border: .35cqw solid var(--ink); background: repeating-linear-gradient(90deg, #0000 0 1.4cqw, #0003 1.4cqw 1.6cqw, #0000 1.6cqw 2.2cqw), linear-gradient(90deg, #a7a9cc, #fff 45%, #8082aa); box-shadow: 0 .8cqw 0 #14143a, 0 1.2cqw .8cqw #0007; }
@@ -101,10 +101,11 @@
   /* כפתורי תמונה */
   .imgBtn { position: absolute; border: 0; padding: 0; background: none; cursor: pointer; }
   .imgBtn img { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  #audioBtn { left: 2.5%; top: 47%; width: 26%; aspect-ratio: 384 / 390; filter: drop-shadow(0 1cqw .8cqw #000c); transition: transform .06s; }
-  #audioBtn .on { opacity: 0; transition: opacity .12s; } #audioBtn.active .on { opacity: 1; }
-  #audioBtn:active { transform: translateY(.6cqw) scale(.97); filter: brightness(.9) drop-shadow(0 .4cqw .4cqw #000c); }
-  #feedWrap { position: absolute; left: 31%; top: 33%; width: 40%; aspect-ratio: 1; }
+  #audioBtn { left: 2.5%; top: 47%; width: 24%; aspect-ratio: 384 / 380; filter: drop-shadow(0 1cqw .8cqw #000c); transition: transform .06s; }
+  #audioBtn .on, #audioBtn .dn { opacity: 0; transition: opacity .12s; } #audioBtn.active .on { opacity: 1; }
+  #audioBtn:active .dn { opacity: 1; transition: none; } #audioBtn:active .up, #audioBtn:active .on { opacity: 0; transition: none; }
+  #audioBtn:active { transform: translateY(.5cqw); filter: drop-shadow(0 .4cqw .4cqw #000c); }
+  #feedWrap { position: absolute; left: 29.5%; top: 33%; width: 40%; aspect-ratio: 1; }
   #feedRing { position: absolute; inset: -.6cqw; border-radius: 50%; pointer-events: none; z-index: 1; background: conic-gradient(var(--yellow) var(--p, 0%), transparent 0); -webkit-mask: radial-gradient(circle, transparent 66%, #000 68%); mask: radial-gradient(circle, transparent 66%, #000 68%); filter: drop-shadow(0 0 1cqw #ffe600aa); }
   #feed { position: absolute; inset: 0; z-index: 2; border: 0; padding: 0; border-radius: 50%; cursor: pointer; background: url("assets/feed_up.webp") center / contain no-repeat; filter: drop-shadow(0 1.6cqw 1cqw #000b) drop-shadow(0 .4cqw .3cqw #000); transition: transform .06s, filter .06s; }
   #feed::after { content: ""; position: absolute; inset: 14%; border-radius: 50%; pointer-events: none; mix-blend-mode: screen; opacity: .55; background: radial-gradient(circle at calc(34% + var(--tx) * 14%) calc(26% + var(--ty) * 12%), #ffffff90 0, #ffffff00 38%); }
@@ -112,9 +113,9 @@
   #feed:disabled { filter: saturate(.7) brightness(.8) drop-shadow(0 .6cqw .4cqw #000b); cursor: default; }
 
   /* ידית: צלחת + כדור */
-  #lever { position: absolute; left: 80.5%; top: 24%; height: 72%; aspect-ratio: 261 / 1158; touch-action: none; filter: drop-shadow(0 1cqw .8cqw #000b); }
+  #lever { position: absolute; left: 78.5%; top: 3.5%; height: 93%; aspect-ratio: 320 / 1244; touch-action: none; filter: drop-shadow(0 1cqw .8cqw #000b); }
   #lever .plate { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  #leverBall { position: absolute; left: 50%; top: 0; width: 89.6%; margin-left: -44.8%; aspect-ratio: 1 / 1.015; touch-action: none; cursor: grab; z-index: 2; filter: drop-shadow(0 1.1cqw .8cqw #000c); }
+  #leverBall { position: absolute; left: 50%; top: 0; width: 88%; margin-left: -44%; aspect-ratio: 220 / 354; touch-action: none; cursor: grab; z-index: 2; filter: drop-shadow(0 1.1cqw .8cqw #000c); }
   #leverBall img { width: 100%; height: 100%; pointer-events: none; display: block; }
   #leverBall.drag { cursor: grabbing; }
   #leverBall.spring { transition: transform .55s cubic-bezier(.25, 1.9, .5, 1); }
@@ -130,17 +131,13 @@
   #nameplate { position: absolute; left: 29.4%; top: 6.5%; width: 41.8%; height: 2.7%; z-index: 22; display: grid; place-items: center; font: 900 4.2cqw/1 "Impact", "Arial Black", sans-serif; letter-spacing: 1.4cqw; color: #e8e4ff; text-shadow: 0 .2cqw 0 #fff6, 0 -.2cqw 0 #0009; }
 
   /* מיכל + כלבלב */
-  #tankBox { background: linear-gradient(180deg, #f3e9d2 0%, #d8cbb0 52%, #8a5c30 52%, #b07a45 100%); }
-  #tankScene { position: absolute; inset: 0; }
-  #tankScene .beam { position: absolute; top: 0; left: 52%; width: 40%; height: 70%; background: linear-gradient(180deg, #fff6c866, #fff6c800); clip-path: polygon(28% 0, 62% 0, 100% 100%, 0 100%); }
-  #tankScene .floor { position: absolute; left: 0; right: 0; top: 50%; bottom: 0; background: repeating-linear-gradient(90deg, #0000002a 0 .2cqw, #0000 .2cqw 6cqw), linear-gradient(#a87440, #c28a52 50%, #7a4e26); box-shadow: inset 0 1cqw 1.4cqw #0005; }
-  #dogShadow { position: absolute; bottom: 17%; height: 7%; width: 14cqw; border-radius: 50%; background: radial-gradient(ellipse, #000b 0, #0000 72%); filter: blur(.3cqw); will-change: transform; left: 0; }
-  #dog { position: absolute; left: 0; bottom: 14%; width: 0; height: 0; will-change: transform; z-index: 3; }
-  #dog img { position: absolute; bottom: 0; left: 0; transform: translateX(-50%); display: none; max-width: none; filter: drop-shadow(0 .3cqw .3cqw #0007); }
-  #dog[data-s="stand"] .s-stand, #dog[data-s="sit"] .s-sit, #dog[data-s="happy"] .s-happy, #dog[data-s="sleep"] .s-sleep { display: block; }
-  #dog .s-stand { height: 12.4cqw; } #dog .s-sit { height: 12.7cqw; } #dog .s-happy { height: 12.8cqw; } #dog .s-sleep { height: 8.7cqw; }
+  #tankBox { background: #7aa84e; }
+  #tankScene { position: absolute; inset: 0; background: url("assets/tank_back.webp") center bottom / cover no-repeat; }
+  #dogShadow { position: absolute; bottom: 21%; height: 6%; width: 14cqw; border-radius: 50%; background: radial-gradient(ellipse, #000a 0, #0000 72%); filter: blur(.3cqw); will-change: transform; left: 0; }
+  #dog { position: absolute; left: 0; bottom: 19%; width: 0; height: 0; will-change: transform; z-index: 3; }
+  #dog img { position: absolute; bottom: 0; left: 0; display: none; max-width: none; filter: drop-shadow(0 .3cqw .3cqw #0007); }
+  #dog img.on { display: block; }
   #dogFlip { position: absolute; left: 0; bottom: 0; width: 0; height: 0; transform-origin: 0 100%; }
-  #dog.walk #dogFlip img { animation: bob .22s ease-in-out infinite alternate; transform-origin: 50% 100%; }
   #dog.angry #dogFlip img { animation: bob .09s ease-in-out infinite alternate; }
   #dog.jump #dogFlip { animation: hop .5s ease-out; }
   #bubble { position: absolute; bottom: 13.4cqw; left: 0; transform: translateX(-50%) scale(0); transform-origin: bottom center; white-space: nowrap; background: #fff; color: var(--ink); border: .5cqw solid var(--ink); border-radius: 3cqw; padding: .4cqw 2.2cqw; font: 900 3.2cqw system-ui; z-index: 7; }
@@ -154,7 +151,7 @@
   @keyframes blink { 50% { opacity: .15; } }
   @keyframes lampFlicker { 50% { filter: brightness(.82); } }
   @keyframes pop { 0% { opacity: 0; transform: translate(-50%, -50%) rotate(-6deg) scale(.4); } 12% { opacity: 1; transform: translate(-50%, -50%) rotate(-6deg) scale(1.15); } 25% { transform: translate(-50%, -50%) rotate(-6deg) scale(1); } 80% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -64%) rotate(-6deg) scale(1); } }
-  @keyframes bob { from { transform: translateX(-50%) translateY(0) rotate(-1.2deg); } to { transform: translateX(-50%) translateY(-.9cqw) rotate(1.4deg); } }
+  @keyframes bob { from { transform: translateY(0) rotate(-.8deg); } to { transform: translateY(-.5cqw) rotate(.8deg); } }
   @keyframes hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-5cqw) rotate(-4deg); } }
   @keyframes bubble { 0% { transform: translateX(-50%) scale(0); } 15%, 80% { transform: translateX(-50%) scale(1); } 100% { transform: translateX(-50%) scale(0); } }
   @keyframes marquee { to { transform: translateX(-100%); } }
@@ -186,19 +183,16 @@
   <div id="panelBox" class="box">
     <div id="vuBox"><div id="vu"></div><div id="db">-60</div></div>
     <div id="gateBox"><input id="gate" type="range" min="0" max="100" value="35" aria-label="שער רעש"></div>
-    <button id="audioBtn" class="imgBtn" aria-label="הפעל שמע"><img src="assets/audio_off.webp" alt=""><img class="on" src="assets/audio_on.webp" alt=""></button>
+    <button id="audioBtn" class="imgBtn" aria-label="הפעל שמע"><img class="up" src="assets/audio_off.webp" alt=""><img class="on" src="assets/audio_on.webp" alt=""><img class="dn" src="assets/audio_down.webp" alt=""></button>
     <div id="feedWrap"><div id="feedRing"></div><button id="feed" aria-label="תן חטיף"></button></div>
     <div id="lever"><img class="plate" src="assets/lever_plate.webp" alt=""><div id="leverBall"><img src="assets/lever_ball.webp" alt=""></div></div>
   </div>
 
   <div id="tankBox" class="box">
-    <div id="tankScene"><div class="beam"></div><div class="floor"></div></div>
+    <div id="tankScene"></div>
     <div id="dogShadow"></div>
     <div id="dog" data-s="sit">
-      <div id="dogFlip">
-        <img class="s-stand" src="assets/dog_stand.webp" alt=""><img class="s-sit" src="assets/dog_sit.webp" alt="">
-        <img class="s-happy" src="assets/dog_sit_happy.webp" alt=""><img class="s-sleep" src="assets/dog_sleep.webp" alt="">
-      </div>
+      <div id="dogFlip"></div>
       <div id="bubble">ווף!</div>
     </div>
     <img id="tankImg" src="assets/tank.webp" alt="">
@@ -318,15 +312,26 @@
   }
   $('lampWrap').addEventListener('click', () => { state.spike = 1; bark(true); }); // בדיקת הנורה
 
-  /* ---------- הכלבלב: מצב ---------- */
-  const dog = $('dog');
-  let moving = false, pause = 0;
-  function setSprite() {
-    const mood = barking ? 'angry' : Date.now() - lastFeed < 9000 ? 'happy' : Date.now() - lastLoud > 35000 ? 'sleep' : '';
-    let s = 'sit';
-    if (mood === 'sleep') s = 'sleep'; else if (mood === 'happy') s = 'happy'; else if (mood === 'angry' || moving) s = 'stand';
-    if (dog.dataset.s !== s) dog.dataset.s = s;
-    dog.classList.toggle('walk', moving && !mood); dog.classList.toggle('angry', mood === 'angry');
+  /* ---------- הכלבלב: תנוחות (תמונות) ---------- */
+  const dog = $('dog'), dogFlip = $('dogFlip');
+  const POSES = ['walk_1', 'walk_2', 'walk_3', 'walk_4', 'alert', 'bark', 'eat', 'sit', 'sit_happy', 'sleep'];
+  const sprites = {}; let moving = false, pause = 0, eatUntil = 0, idlePose = 'sit', curPose = '';
+  POSES.forEach((n) => { const im = new Image(); im.src = 'assets/dog_' + n + '.webp'; im.alt = ''; dogFlip.appendChild(im); sprites[n] = im; });
+  fetch('assets/sizes.json').then((r) => r.json()).then((sz) => {          // גודל ונקודת עיגון (קולר) לכל תנוחה
+    POSES.forEach((n) => { const m = sz['dog_' + n]; if (!m) return; sprites[n].style.height = (m.h / 405 * 12.4) + 'cqw'; sprites[n].style.translate = (-(m.ax || .75) * 100) + '% 0'; });
+  }).catch(() => POSES.forEach((n) => { sprites[n].style.height = '12.4cqw'; sprites[n].style.translate = '-75% 0'; }));
+  function pickPose(now) {
+    if (barking) return 'bark';
+    if (now < eatUntil) return 'eat';
+    if (Date.now() - lastLoud > 35000) return 'sleep';
+    if (moving) return 'walk_' + (1 + Math.floor(now / 120) % 4);
+    if (Date.now() - lastFeed < 9000) return 'sit_happy';
+    return idlePose;
+  }
+  function setSprite(now = performance.now()) {
+    const n = pickPose(now);
+    if (n !== curPose) { if (curPose) sprites[curPose].classList.remove('on'); sprites[n].classList.add('on'); curPose = n; }
+    dog.classList.toggle('angry', n === 'bark');
   }
   function speak(txt) { const b = $('bubble'); b.textContent = txt; b.classList.remove('show'); void b.offsetWidth; b.classList.add('show'); }
 
@@ -352,11 +357,13 @@
 
   /* ---------- ידית משיכה (לא עושה כלום, אבל מרגישה מצוין) ---------- */
   const lever = $('lever'), ball = $('leverBall');
-  const GEOM = { c0: 0.075, c1: 0.835 };                       // מרכז הכדור כשבר מגובה הצלחת: למעלה / למטה
+  const GEOM = { slotBot: 0.9, margin: 0.035 };                // קצה החריץ התחתון ושוליים (כשברי גובה הצלחת)
   let drag = null, curY = 0, lastN = 0, latched = false;
-  const travel = () => (GEOM.c1 - GEOM.c0) * lever.offsetHeight;
+  // קצה המוט (תחתית תמונת הכדור) מתחיל כשהכדור נוגע בקצה העליון של הצלחת ויורד לאורך החריץ
+  const tipRest = () => ball.offsetHeight, tipEnd = () => (GEOM.slotBot - GEOM.margin) * lever.offsetHeight;
+  const travel = () => Math.max(1, tipEnd() - tipRest());
   const setY = (y) => { curY = y; ball.style.transform = `translateY(${y}px)`; };
-  const restTop = () => { ball.style.top = (GEOM.c0 * lever.offsetHeight - ball.offsetHeight / 2) + 'px'; };
+  const restTop = () => { ball.style.top = '0px'; };
   function pulledThrough() {
     if (latched) return; latched = true; state.pulls++; sfx.clunk(); buzz([30, 30, 80]);
     shell.classList.remove('thump'); void shell.offsetWidth; shell.classList.add('thump');
@@ -383,7 +390,7 @@
   new ResizeObserver(restTop).observe(lever); window.addEventListener('load', restTop);
 
   /* ---------- הכלבלב במיכל ---------- */
-  const tank = $('tankBox'), dogFlip = $('dogFlip'), shadow = $('dogShadow');
+  const tank = $('tankBox'), shadow = $('dogShadow');
   let dx = 0.3, dir = 1, target = null, last = performance.now();                 // dx: מיקום מרכז הכלב כשבר מרוחב המיכל
   const XMIN = 0.2, XMAX = 0.8;
   function dropTreat() {
@@ -399,15 +406,15 @@
     const sleeping = dog.dataset.s === 'sleep';
     if (pause > 0 || sleeping) { pause -= dt; moving = false; }
     else if (target) {
-      const to = target.x - 0.09 * dir; dir = to > dx ? 1 : -1; dx += dir * 0.55 * dt; moving = true;
-      if (Math.abs(to - dx) < 0.025) { target.el.remove(); target = null; moving = false; sfx.crunch(); pause = 1.8; dog.classList.remove('jump'); void dog.offsetWidth; dog.classList.add('jump'); speak('נחמד!'); }
+      const to = target.x - 0.115 * dir; dir = to > dx ? 1 : -1; dx += dir * 0.55 * dt; moving = true;
+      if (Math.abs(to - dx) < 0.02) { target.el.remove(); target = null; moving = false; sfx.crunch(); pause = 2.4; eatUntil = performance.now() + 1500; speak('נחמד!'); }
     } else {
       moving = true; dx += dir * 0.16 * dt;
       if (dx > XMAX) { dx = XMAX; dir = -1; } if (dx < XMIN) { dx = XMIN; dir = 1; }
-      if (Math.random() < dt * 0.11) pause = 1 + Math.random() * 2;
+      if (Math.random() < dt * 0.11) { pause = 1 + Math.random() * 2; idlePose = Math.random() < 0.5 ? 'sit' : 'alert'; }
     }
     const W = tank.clientWidth;
-    dog.style.transform = `translateX(${dx * W}px)`; dogFlip.style.transform = `scaleX(${dir})`;
+    dog.style.transform = `translateX(${dx * W}px)`; dogFlip.style.transform = `scaleX(${dir})`; setSprite(now);
     shadow.style.transform = `translateX(${dx * W - shadow.offsetWidth / 2}px)`;
     requestAnimationFrame(dogTick);
   }

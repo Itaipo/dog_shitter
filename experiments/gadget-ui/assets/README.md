@@ -15,11 +15,15 @@
 | כפתור האכלה — לחוץ | `feed_down.webp` (מקור: `source/feed_down_original.png`) | ✅ נוצר ומשולב; הכפתור נשאר לחוץ בזמן ההכנה/ריקון |
 | כפתור שמע (כבוי/דולק) | `audio_off.webp`, `audio_on.webp` | ✅ נוצר ומשולב |
 | פלוס/מינוס של השעון | `plus_up/down.webp`, `minus_up/down.webp` | ✅ נוצר (זוג בתמונה אחת, פוצל) ומשולב |
-| ידית משיכה | `lever_plate.webp` + `lever_ball.webp` | ⚠️ משולב בעקיפין: התמונה המקורית כללה כדור, מוט והילה צרובה; הופרדו בקוד (`tools/process_assets.py`). מומלץ לבקש מחדש: צלחת ריקה וכדור בנפרד |
+| ידית משיכה | `lever_plate.webp` + `lever_ball.webp` | ✅ נוצרו בנפרד (צלחת ריקה; כדור עם מוט), רקע ירוק הוסר בקוד |
 | נורת חוטם (כבויה/דולקת) | `lamp_off.webp`, `lamp_on.webp` | ✅ נוצר ומשולב (ההילה האדומה הצרובה הוסרה והוחלפה בזוהר CSS) |
 | מעטפת המכשיר | `shell.webp` | ✅ נוצר ומשולב; ארבעה חלונות ריקים (מסך, מונה, לוח בקרה, מיכל) |
 | מיכל זכוכית | `tank.webp` | ✅ משולב אחרי ניקוי (שאריות "משבצות שקיפות" מעל המכסה ובתוך הזכוכית נמחקו) |
-| כלבלב (עומד/יושב/שמח/ישן) | `dog_stand/sit/sit_happy/sleep.webp` | ✅ נוצר ומשולב (הילה צרובה הוסרה). חסרים פריימי ריצה — ההליכה מדומה בקפיצה קלה |
+| כלבלב | `dog_walk_1..4`, `dog_bark`, `dog_eat`, `dog_alert`, `dog_sit`, `dog_sit_happy`, `dog_sleep` | ✅ נוצרו ומשולבים; נקודת עיגון לפי הקולר האדום (`sizes.json`) כדי שהכלב לא יקפוץ בין תנוחות |
+| כפתור שמע לחוץ | `audio_down.webp` | ✅ משולב |
+| רקע המיכל | `tank_back.webp` (מקור: `tank_back_1`, דיורמה מיניאטורית של אחו) | ✅ נבחר; חדר סלון נפסל כי נראה כמו כלוב |
+| חטיף (תמונה) | — | ⏳ חסר; כרגע ציור SVG |
+| סמל/לוגו הערוץ | — | ⏸ נדחה: שלושה כיווני עיצוב נפסלו; ממשיכים בהמשך |
 
 ## פרומפטים
 **כפתור האכלה (נוצר):** `[כותרת] A large round arcade push-button seen from the front: translucent glossy hot-pink/red plastic dome with a soft inner glow and a sharp specular highlight, set in a knurled brushed-aluminium bezel ring with a dark inner gap. Square 1024x1024.` — לחוץ: `Same button, but pressed down: the dome sits lower in the bezel, highlight softer, less shadow.`
