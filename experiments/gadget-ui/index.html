@@ -7,10 +7,11 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Kora">
-<meta name="theme-color" content="#1a0b3d">
+<meta name="theme-color" content="#5b2c83">
+<link rel="manifest" href="manifest.webmanifest?v=20261020c">
 <title>Kora Gadget</title>
-<link rel="preload" as="image" href="assets/shell.webp?v=20261020a">
-<link rel="preload" as="image" href="assets/feed_down.webp?v=20261020a">
+<link rel="preload" as="image" href="assets/shell.webp?v=20261020c">
+<link rel="preload" as="image" href="assets/feed_down.webp?v=20261020c">
 <!--
   ניסוי עיצוב בלבד (D-045): כל הנתונים כאן מדומים, אין חיבור ל-Pi.
   גרסה 3: כל החלקים הפיזיים הם תמונות (נוצרו ב-GPT, עובדו ע"י tools/process_assets.py).
@@ -24,34 +25,38 @@
     --tx: 0; --ty: 0;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+  html { background: #320f4d; }
   html, body { margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none; }
   body {
-    position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; perspective: 1200px;
-    background: linear-gradient(180deg, #4b2688 0%, #3d1965 40%, #2c0f52 100%);
+    position: fixed; left: 0; right: 0; top: 0; height: 100lvh; display: flex; justify-content: center; align-items: center; perspective: 1200px;
+    background: linear-gradient(180deg, #5b2c83 0%, #562d80 50%, #320f4d 100%);
     font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif; color: #fff;
     user-select: none; -webkit-user-select: none; touch-action: manipulation;
-    padding: max(6px, env(safe-area-inset-top)) 6px max(6px, env(safe-area-inset-bottom));
+    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
   }
 
   /* ---------- המכשיר: כל המיקומים באחוזים מתוך תמונת המעטפת (783x1693) ---------- */
   #shell {
-    position: relative; container-type: size; aspect-ratio: 783 / 1693;
-    height: min(100%, calc((100vw - 12px) * 2.162)); max-height: 100%;
+    position: relative; container-type: size; aspect-ratio: 887 / 1774;
+    height: min(100%, 200vw); max-height: 100%;
     transform: rotateX(calc(var(--ty) * -4deg)) rotateY(calc(var(--tx) * 5deg));
     filter: drop-shadow(calc(var(--tx) * -1.4cqw) calc(2.4cqw + var(--ty) * -.8cqw) 3.4cqw #000d) drop-shadow(0 .3cqw .4cqw #000);
   }
   #shell.shake { animation: shake .12s 3; } #shell.thump { animation: shake .09s 2; }
   .box { position: absolute; overflow: hidden; }
+  #shellTop, #shellBottom { position: absolute; left: 0; right: 0; height: 17cqw; z-index: 19; pointer-events: none; transform: scaleY(-1);
+    background: url("assets/shell.webp?v=20261020c") top / 100% 670cqw no-repeat; }
+  #shellTop { bottom: 100%; } #shellBottom { top: 100%; background-position: bottom; }
   #shellImg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 20; pointer-events: none; display: block; }
   #sheen { position: absolute; inset: 0; z-index: 21; pointer-events: none; mix-blend-mode: soft-light; opacity: .75;
     background: linear-gradient(calc(110deg + var(--tx) * 40deg), #fff0 0, #ffffffcc 42%, #fff0 62%);
-    -webkit-mask: url(assets/shell.webp?v=20261020a) center / 100% 100% no-repeat; mask: url(assets/shell.webp?v=20261020a) center / 100% 100% no-repeat; }
+    -webkit-mask: url(assets/shell.webp?v=20261020c) center / 100% 100% no-repeat; mask: url(assets/shell.webp?v=20261020c) center / 100% 100% no-repeat; }
 
   /* ---------- חלונות המעטפת (מתחת לתמונת המעטפת; מעט חופפים כדי שלא יהיו פערים) ---------- */
-  #screenBox { left: 17.4%; top: 9.45%; width: 65.1%; height: 28.7%; background: #0d1b2a; }
-  #counterBox { left: 16.8%; top: 42.2%; width: 66.3%; height: 5.2%; background: linear-gradient(#050202, #160800); }
-  #panelBox { left: 15.5%; top: 51.3%; width: 68.9%; height: 27%; background: #2c2e48; }
-  #tankBox { left: 16%; top: 82.4%; width: 67.9%; height: 10.1%; background: #111; }
+  #screenBox { left: 15.5%; top: 12%; width: 69%; height: 27.8%; background: #0d1b2a; }
+  #counterBox { left: 15.95%; top: 41.5%; width: 68%; height: 5.5%; background: linear-gradient(#050202, #160800); }
+  #panelBox { left: 16.4%; top: 49.8%; width: 67.2%; height: 24.2%; background: #2c2e48; }
+  #tankBox { left: 16.5%; top: 77.4%; width: 67%; height: 14.6%; background: #111; }
 
   /* מסך המצלמה */
   #screenBox canvas, #screenBox video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -101,15 +106,15 @@
   /* כפתורי תמונה */
   .imgBtn { position: absolute; border: 0; padding: 0; background: none; cursor: pointer; }
   .imgBtn img { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  #audioBtn { left: 2.5%; top: 47%; width: 24%; aspect-ratio: 384 / 380; filter: drop-shadow(0 1cqw .8cqw #000c); transition: transform .06s; }
+  #audioBtn { left: 4%; top: 50%; width: 22%; aspect-ratio: 384 / 380; filter: drop-shadow(0 1cqw .8cqw #000c); transition: transform .06s; }
   #audioBtn .on, #audioBtn .dn { opacity: 0; transition: opacity .12s; } #audioBtn.active .on { opacity: 1; }
   #audioBtn:active .dn { opacity: 1; transition: none; } #audioBtn:active .up, #audioBtn:active .on { opacity: 0; transition: none; }
   #audioBtn:active { transform: translateY(.5cqw); filter: drop-shadow(0 .4cqw .4cqw #000c); }
-  #feedWrap { position: absolute; left: 29.5%; top: 33%; width: 40%; aspect-ratio: 1; }
+  #feedWrap { position: absolute; left: 31%; top: 35%; width: 36%; aspect-ratio: 1; }
   #feedRing { position: absolute; inset: -.6cqw; border-radius: 50%; pointer-events: none; z-index: 1; background: conic-gradient(var(--yellow) var(--p, 0%), transparent 0); -webkit-mask: radial-gradient(circle, transparent 66%, #000 68%); mask: radial-gradient(circle, transparent 66%, #000 68%); filter: drop-shadow(0 0 1cqw #ffe600aa); }
-  #feed { position: absolute; inset: 0; z-index: 2; border: 0; padding: 0; border-radius: 50%; cursor: pointer; background: url("assets/feed_up.webp?v=20261020a") center / contain no-repeat; filter: drop-shadow(0 1.6cqw 1cqw #000b) drop-shadow(0 .4cqw .3cqw #000); transition: transform .06s, filter .06s; }
+  #feed { position: absolute; inset: 0; z-index: 2; border: 0; padding: 0; border-radius: 50%; cursor: pointer; background: url("assets/feed_up.webp?v=20261020c") center / contain no-repeat; filter: drop-shadow(0 1.6cqw 1cqw #000b) drop-shadow(0 .4cqw .3cqw #000); transition: transform .06s, filter .06s; }
   #feed::after { content: ""; position: absolute; inset: 14%; border-radius: 50%; pointer-events: none; mix-blend-mode: screen; opacity: .55; background: radial-gradient(circle at calc(34% + var(--tx) * 14%) calc(26% + var(--ty) * 12%), #ffffff90 0, #ffffff00 38%); }
-  #feed:active:not(:disabled), #feed:disabled { background-image: url("assets/feed_down.webp?v=20261020a"); transform: translateY(.6cqw); filter: drop-shadow(0 .6cqw .4cqw #000b) drop-shadow(0 .2cqw .2cqw #000); }
+  #feed:active:not(:disabled), #feed:disabled { background-image: url("assets/feed_down.webp?v=20261020c"); transform: translateY(.6cqw); filter: drop-shadow(0 .6cqw .4cqw #000b) drop-shadow(0 .2cqw .2cqw #000); }
   #feed:disabled { filter: saturate(.7) brightness(.8) drop-shadow(0 .6cqw .4cqw #000b); cursor: default; }
 
   /* ידית: צלחת + כדור */
@@ -122,21 +127,21 @@
   #leverBall.auto { transition: transform .17s ease-in; }
 
   /* ראש המכשיר: נורת חוטם, סמל ושלט */
-  #lampWrap { position: absolute; left: 5%; top: 1.2%; width: 21.8%; aspect-ratio: 480 / 372; z-index: 22; cursor: pointer; }
+  #lampWrap { position: absolute; left: 40.7%; top: 3%; width: 19.5%; aspect-ratio: 480 / 372; z-index: 22; cursor: pointer; }
   #lampWrap img { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
   #lampWrap .on { opacity: 0; transition: opacity .08s; }
   #lampWrap.on .on { opacity: 1; animation: lampFlicker .5s steps(2) infinite; }
   #lampWrap.on { filter: drop-shadow(0 0 2.2cqw #ff1f3d) drop-shadow(0 0 5cqw #ff1f3dcc) drop-shadow(0 0 10cqw #ff1f3d88); }
   #emblem { position: absolute; left: 73.6%; top: 1.6%; width: 13%; z-index: 22; filter: drop-shadow(.3cqw .5cqw .3cqw #000a); }
-  #fps { position: absolute; left: 4%; top: 12%; z-index: 40; padding: .6cqw 1.6cqw; border-radius: 1cqw; background: #000c; color: #7CFF9B; font: 800 3cqw 'Courier New', monospace; white-space: pre; pointer-events: none; }
+  #fps { position: absolute; left: 4%; top: 13%; z-index: 40; padding: .6cqw 1.6cqw; border-radius: 1cqw; background: #000c; color: #7CFF9B; font: 800 3cqw 'Courier New', monospace; white-space: pre; pointer-events: none; }
   #nameplate { position: absolute; left: 29.4%; top: 6.5%; width: 41.8%; height: 2.7%; z-index: 22; display: grid; place-items: center; font: 900 4.2cqw/1 "Impact", "Arial Black", sans-serif; letter-spacing: 1.4cqw; color: #e8e4ff; text-shadow: 0 .2cqw 0 #fff6, 0 -.2cqw 0 #0009; }
 
   /* מיכל + כלבלב */
   #tankBox { background: #7aa84e; }
-  #tankScene { position: absolute; inset: 0; background: url("assets/tank_back.webp?v=20261020a") center / 100% 100% no-repeat; }
+  #tankScene { position: absolute; inset: 0; background: url("assets/tank_back.webp?v=20261020c") center / 100% 100% no-repeat; }
   #dogShadow { position: absolute; bottom: 15.5%; height: 6%; width: 14cqw; border-radius: 50%; background: radial-gradient(ellipse, #000a 0, #0000 72%); filter: blur(.3cqw); will-change: transform; left: 0; }
   #dog { position: absolute; left: 0; bottom: 17%; width: 0; height: 0; will-change: transform; z-index: 3; }
-  #dog img { position: absolute; bottom: 0; left: 0; max-width: none; opacity: 0; transition: opacity .16s linear; filter: drop-shadow(0 .3cqw .3cqw #0007); }
+  #dog img { position: absolute; bottom: 0; left: 0; max-width: none; opacity: 0; transition: opacity .07s linear; filter: drop-shadow(0 .3cqw .3cqw #0007); }
   #dog img.on { opacity: 1; }
   #dogFlip { position: absolute; left: 0; bottom: 0; width: 0; height: 0; transform-origin: 0 100%; }
   #dog.angry #dogFlip img { animation: bob .09s ease-in-out infinite alternate; }
@@ -158,6 +163,7 @@
   @keyframes marquee { to { transform: translateX(-100%); } }
   @keyframes shake { 0%, 100% { transform: rotateX(calc(var(--ty) * -4deg)) rotateY(calc(var(--tx) * 5deg)) translate(0); } 25% { transform: rotateX(calc(var(--ty) * -4deg)) rotateY(calc(var(--tx) * 5deg)) translate(-.8cqw, .5cqw); } 75% { transform: rotateX(calc(var(--ty) * -4deg)) rotateY(calc(var(--tx) * 5deg)) translate(.8cqw, -.5cqw); } }
   @media (prefers-reduced-motion: reduce) { #tickerInner { animation-duration: 0s; } }
+  #nameplate { left: 19.5%; top: 5%; width: 17%; height: 4.8%; font-size: 0; color: transparent; text-shadow: none; }  /* אזור נגיעה סמוי (גריל שמאל): שלוש נגיעות = מד אבחון */
 </style>
 </head>
 <body>
@@ -175,8 +181,8 @@
 
   <div id="counterBox" class="box">
     <div id="pm">
-      <button class="pmBtn" id="minus" aria-label="הורד חטיף"><img class="up" src="assets/minus_up.webp?v=20261020a" alt=""><img class="dn" src="assets/minus_down.webp?v=20261020a" alt=""></button>
-      <button class="pmBtn" id="plus" aria-label="הוסף חטיף"><img class="up" src="assets/plus_up.webp?v=20261020a" alt=""><img class="dn" src="assets/plus_down.webp?v=20261020a" alt=""></button>
+      <button class="pmBtn" id="minus" aria-label="הורד חטיף"><img class="up" src="assets/minus_up.webp?v=20261020c" alt=""><img class="dn" src="assets/minus_down.webp?v=20261020c" alt=""></button>
+      <button class="pmBtn" id="plus" aria-label="הוסף חטיף"><img class="up" src="assets/plus_up.webp?v=20261020c" alt=""><img class="dn" src="assets/plus_down.webp?v=20261020c" alt=""></button>
     </div>
     <div id="lcd"><div class="lbl">חטיפים<small>נשארו</small></div><div id="digits"></div></div>
   </div>
@@ -184,9 +190,9 @@
   <div id="panelBox" class="box">
     <div id="vuBox"><div id="vu"></div><div id="db">-60</div></div>
     <div id="gateBox"><input id="gate" type="range" min="0" max="100" value="35" aria-label="שער רעש"></div>
-    <button id="audioBtn" class="imgBtn" aria-label="הפעל שמע"><img class="up" src="assets/audio_off.webp?v=20261020a" alt=""><img class="on" src="assets/audio_on.webp?v=20261020a" alt=""><img class="dn" src="assets/audio_down.webp?v=20261020a" alt=""></button>
+    <button id="audioBtn" class="imgBtn" aria-label="הפעל שמע"><img class="up" src="assets/audio_off.webp?v=20261020c" alt=""><img class="on" src="assets/audio_on.webp?v=20261020c" alt=""><img class="dn" src="assets/audio_down.webp?v=20261020c" alt=""></button>
     <div id="feedWrap"><div id="feedRing"></div><button id="feed" aria-label="תן חטיף"></button></div>
-    <div id="lever"><img class="plate" src="assets/lever_plate.webp?v=20261020a" alt=""><div id="leverBall"><img src="assets/lever_ball.webp?v=20261020a" alt=""></div></div>
+    <div id="lever"><img class="plate" src="assets/lever_plate.webp?v=20261020c" alt=""><div id="leverBall"><img src="assets/lever_ball.webp?v=20261020c" alt=""></div></div>
   </div>
 
   <div id="tankBox" class="box">
@@ -200,17 +206,13 @@
   </div>
 
   <!-- תמונת המעטפת מעל הכל, ומעליה נורה, סמל ושלט -->
-  <img id="shellImg" src="assets/shell.webp?v=20261020a" alt="">
+  <div id="shellTop"></div><div id="shellBottom"></div>
+  <img id="shellImg" src="assets/shell.webp?v=20261020c" alt="">
   <div id="sheen"></div>
-  <div id="lampWrap" title="לחץ לבדיקת הנורה"><img src="assets/lamp_off.webp?v=20261020a" alt=""><img class="on" src="assets/lamp_on.webp?v=20261020a" alt=""></div>
-  <svg id="emblem" viewBox="0 0 64 64">
-    <defs><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff59a"/><stop offset=".5" stop-color="#ffe600"/><stop offset="1" stop-color="#e0a800"/></linearGradient></defs>
-    <path d="M8 14 L18 4 L24 14 M56 14 L46 4 L40 14" fill="#ff1f8e" stroke="#0c0620" stroke-width="3" stroke-linejoin="round"/>
-    <path d="M8 14 C20 18 44 18 56 14 C58 40 46 54 32 60 C18 54 6 40 8 14 Z" fill="url(#gold)" stroke="#0c0620" stroke-width="3.5" stroke-linejoin="round"/>
-    <path d="M35 17 L21 36 H30 L26 52 L44 30 H34 Z" fill="#7b2bff" stroke="#0c0620" stroke-width="2.5" stroke-linejoin="round"/>
-  </svg>
-  <div id="nameplate">KORA</div>
+  <div id="lampWrap" title="לחץ לבדיקת הנורה"><img src="assets/lamp_off.webp?v=20261020c" alt=""><img class="on" src="assets/lamp_on.webp?v=20261020c" alt=""></div>
+  <div id="nameplate"></div>
   <div id="fps" hidden></div>
+  <div id="probe" style="position:fixed;top:0;left:0;padding-top:env(safe-area-inset-top);visibility:hidden"></div>
 </div>
 
 <script>
@@ -317,10 +319,10 @@
   const dog = $('dog'), dogFlip = $('dogFlip');
   const POSES = ['walk_1', 'walk_2', 'walk_3', 'walk_4', 'alert', 'bark', 'eat', 'sit', 'sit_happy', 'sleep'];
   const sprites = {}; let moving = false, pause = 0, eatUntil = 0, idlePose = 'sit', curPose = '';
-  POSES.forEach((n) => { const im = new Image(); im.src = 'assets/dog_' + n + '.webp?v=20261020a'; im.alt = ''; dogFlip.appendChild(im); sprites[n] = im; });
-  fetch('assets/sizes.json?v=20261020a').then((r) => r.json()).then((sz) => {          // גודל ונקודת עיגון (קולר) לכל תנוחה
-    POSES.forEach((n) => { const m = sz['dog_' + n]; if (!m) return; sprites[n].style.height = (m.h / 405 * 10.2) + 'cqw'; sprites[n].style.translate = (-(m.ax || .75) * 100) + '% 0'; });
-  }).catch(() => POSES.forEach((n) => { sprites[n].style.height = '10.2cqw'; sprites[n].style.translate = '-75% 0'; }));
+  POSES.forEach((n) => { const im = new Image(); im.src = 'assets/dog_' + n + '.webp?v=20261020c'; im.alt = ''; dogFlip.appendChild(im); sprites[n] = im; });
+  fetch('assets/sizes.json?v=20261020c').then((r) => r.json()).then((sz) => {          // גודל ונקודת עיגון (קולר) לכל תנוחה
+    POSES.forEach((n) => { const m = sz['dog_' + n]; if (!m) return; sprites[n].style.height = (m.h / 405 * 11.6) + 'cqw'; sprites[n].style.translate = (-(m.ax || .75) * 100) + '% 0'; });
+  }).catch(() => POSES.forEach((n) => { sprites[n].style.height = '11.6cqw'; sprites[n].style.translate = '-75% 0'; }));
   function pickPose(now) {
     if (barking) return 'bark';
     if (now < eatUntil) return 'eat';
@@ -467,7 +469,7 @@
     plate.addEventListener('click', () => { const t = Date.now(); taps = taps.filter((x) => t - x < 1200); taps.push(t); if (taps.length >= 3) { on = !on; box.hidden = !on; taps = []; } });
     (function loop(now) {
       requestAnimationFrame(loop); frames++; worst = Math.max(worst, now - last); last = now;
-      if (on && now - t0 > 1000) { box.textContent = 'FPS ' + Math.round(frames * 1000 / (now - t0)) + '\nworst ' + Math.round(worst) + 'ms\nacx ' + (ac ? ac.state : 'none'); frames = 0; worst = 0; t0 = now; }
+      if (on && now - t0 > 1000) { box.textContent = 'FPS ' + Math.round(frames * 1000 / (now - t0)) + '\nworst ' + Math.round(worst) + 'ms\nacx ' + (ac ? ac.state : 'none') + '\nv 20261020c\nstandalone ' + navigator.standalone + '\nih ' + innerHeight + ' sh ' + screen.height + '\nsafeTop ' + $('probe').offsetHeight; frames = 0; worst = 0; t0 = now; }
     })(performance.now());
   })();
 

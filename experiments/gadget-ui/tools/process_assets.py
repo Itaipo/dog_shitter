@@ -88,7 +88,13 @@ def collar_anchor(im):
 
 
 # --- מעטפת ---
-sh = load('shell'); save(crop_resize(sh, bbox(sh, 20), 783), 'shell', 92)
+# מעטפת מקצה לקצה (887x1774): חלונות ירוקים פנימיים הופכים לשקופים; כל השאר אטום ולא נחתך
+sh = Image.open(SRC + 'shell_edge_original.png').convert('RGB'); shA = np.array(sh).astype('float32')
+d = shA[..., 1] - np.maximum(shA[..., 0], shA[..., 2])
+alpha = 1 - np.clip((d - 40) / 110.0, 0, 1)
+shA[..., 1] = np.where(d > 0, np.minimum(shA[..., 1], np.maximum(shA[..., 0], shA[..., 2]) + 4), shA[..., 1])
+shim = Image.fromarray(shA.astype('uint8')).convert('RGBA'); shim.putalpha(Image.fromarray((alpha * 255).astype('uint8')))
+save(shim, 'shell', 90)
 
 # --- שמע: כבוי / דולק / לחוץ ---
 for n in ('audio_off', 'audio_on'):

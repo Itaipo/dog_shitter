@@ -1,0 +1,9 @@
+{
+  "name": "Kora",
+  "short_name": "Kora",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#5b2c83",
+  "theme_color": "#5b2c83"
+}
