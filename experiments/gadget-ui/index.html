@@ -9,8 +9,8 @@
 <meta name="apple-mobile-web-app-title" content="Kora">
 <meta name="theme-color" content="#1a0b3d">
 <title>Kora Gadget</title>
-<link rel="preload" as="image" href="assets/shell.webp">
-<link rel="preload" as="image" href="assets/feed_down.webp">
+<link rel="preload" as="image" href="assets/shell.webp?v=20261020a">
+<link rel="preload" as="image" href="assets/feed_down.webp?v=20261020a">
 <!--
   ניסוי עיצוב בלבד (D-045): כל הנתונים כאן מדומים, אין חיבור ל-Pi.
   גרסה 3: כל החלקים הפיזיים הם תמונות (נוצרו ב-GPT, עובדו ע"י tools/process_assets.py).
@@ -27,7 +27,7 @@
   html, body { margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none; }
   body {
     position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; perspective: 1200px;
-    background: radial-gradient(circle at 18% 6%, #7b2bff55 0, transparent 40%), radial-gradient(circle at 88% 96%, #00e5ff33 0, transparent 42%), #0a0418;
+    background: linear-gradient(180deg, #4b2688 0%, #3d1965 40%, #2c0f52 100%);
     font-family: "Trebuchet MS", "Arial Rounded MT Bold", system-ui, sans-serif; color: #fff;
     user-select: none; -webkit-user-select: none; touch-action: manipulation;
     padding: max(6px, env(safe-area-inset-top)) 6px max(6px, env(safe-area-inset-bottom));
@@ -45,7 +45,7 @@
   #shellImg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 20; pointer-events: none; display: block; }
   #sheen { position: absolute; inset: 0; z-index: 21; pointer-events: none; mix-blend-mode: soft-light; opacity: .75;
     background: linear-gradient(calc(110deg + var(--tx) * 40deg), #fff0 0, #ffffffcc 42%, #fff0 62%);
-    -webkit-mask: url(assets/shell.webp) center / 100% 100% no-repeat; mask: url(assets/shell.webp) center / 100% 100% no-repeat; }
+    -webkit-mask: url(assets/shell.webp?v=20261020a) center / 100% 100% no-repeat; mask: url(assets/shell.webp?v=20261020a) center / 100% 100% no-repeat; }
 
   /* ---------- חלונות המעטפת (מתחת לתמונת המעטפת; מעט חופפים כדי שלא יהיו פערים) ---------- */
   #screenBox { left: 17.4%; top: 9.45%; width: 65.1%; height: 28.7%; background: #0d1b2a; }
@@ -107,9 +107,9 @@
   #audioBtn:active { transform: translateY(.5cqw); filter: drop-shadow(0 .4cqw .4cqw #000c); }
   #feedWrap { position: absolute; left: 29.5%; top: 33%; width: 40%; aspect-ratio: 1; }
   #feedRing { position: absolute; inset: -.6cqw; border-radius: 50%; pointer-events: none; z-index: 1; background: conic-gradient(var(--yellow) var(--p, 0%), transparent 0); -webkit-mask: radial-gradient(circle, transparent 66%, #000 68%); mask: radial-gradient(circle, transparent 66%, #000 68%); filter: drop-shadow(0 0 1cqw #ffe600aa); }
-  #feed { position: absolute; inset: 0; z-index: 2; border: 0; padding: 0; border-radius: 50%; cursor: pointer; background: url("assets/feed_up.webp") center / contain no-repeat; filter: drop-shadow(0 1.6cqw 1cqw #000b) drop-shadow(0 .4cqw .3cqw #000); transition: transform .06s, filter .06s; }
+  #feed { position: absolute; inset: 0; z-index: 2; border: 0; padding: 0; border-radius: 50%; cursor: pointer; background: url("assets/feed_up.webp?v=20261020a") center / contain no-repeat; filter: drop-shadow(0 1.6cqw 1cqw #000b) drop-shadow(0 .4cqw .3cqw #000); transition: transform .06s, filter .06s; }
   #feed::after { content: ""; position: absolute; inset: 14%; border-radius: 50%; pointer-events: none; mix-blend-mode: screen; opacity: .55; background: radial-gradient(circle at calc(34% + var(--tx) * 14%) calc(26% + var(--ty) * 12%), #ffffff90 0, #ffffff00 38%); }
-  #feed:active:not(:disabled), #feed:disabled { background-image: url("assets/feed_down.webp"); transform: translateY(.6cqw); filter: drop-shadow(0 .6cqw .4cqw #000b) drop-shadow(0 .2cqw .2cqw #000); }
+  #feed:active:not(:disabled), #feed:disabled { background-image: url("assets/feed_down.webp?v=20261020a"); transform: translateY(.6cqw); filter: drop-shadow(0 .6cqw .4cqw #000b) drop-shadow(0 .2cqw .2cqw #000); }
   #feed:disabled { filter: saturate(.7) brightness(.8) drop-shadow(0 .6cqw .4cqw #000b); cursor: default; }
 
   /* ידית: צלחת + כדור */
@@ -133,11 +133,11 @@
 
   /* מיכל + כלבלב */
   #tankBox { background: #7aa84e; }
-  #tankScene { position: absolute; inset: 0; background: url("assets/tank_back.webp") center bottom / cover no-repeat; }
-  #dogShadow { position: absolute; bottom: 21%; height: 6%; width: 14cqw; border-radius: 50%; background: radial-gradient(ellipse, #000a 0, #0000 72%); filter: blur(.3cqw); will-change: transform; left: 0; }
-  #dog { position: absolute; left: 0; bottom: 19%; width: 0; height: 0; will-change: transform; z-index: 3; }
-  #dog img { position: absolute; bottom: 0; left: 0; display: none; max-width: none; filter: drop-shadow(0 .3cqw .3cqw #0007); }
-  #dog img.on { display: block; }
+  #tankScene { position: absolute; inset: 0; background: url("assets/tank_back.webp?v=20261020a") center / 100% 100% no-repeat; }
+  #dogShadow { position: absolute; bottom: 15.5%; height: 6%; width: 14cqw; border-radius: 50%; background: radial-gradient(ellipse, #000a 0, #0000 72%); filter: blur(.3cqw); will-change: transform; left: 0; }
+  #dog { position: absolute; left: 0; bottom: 17%; width: 0; height: 0; will-change: transform; z-index: 3; }
+  #dog img { position: absolute; bottom: 0; left: 0; max-width: none; opacity: 0; transition: opacity .16s linear; filter: drop-shadow(0 .3cqw .3cqw #0007); }
+  #dog img.on { opacity: 1; }
   #dogFlip { position: absolute; left: 0; bottom: 0; width: 0; height: 0; transform-origin: 0 100%; }
   #dog.angry #dogFlip img { animation: bob .09s ease-in-out infinite alternate; }
   #dog.jump #dogFlip { animation: hop .5s ease-out; }
@@ -175,8 +175,8 @@
 
   <div id="counterBox" class="box">
     <div id="pm">
-      <button class="pmBtn" id="minus" aria-label="הורד חטיף"><img class="up" src="assets/minus_up.webp" alt=""><img class="dn" src="assets/minus_down.webp" alt=""></button>
-      <button class="pmBtn" id="plus" aria-label="הוסף חטיף"><img class="up" src="assets/plus_up.webp" alt=""><img class="dn" src="assets/plus_down.webp" alt=""></button>
+      <button class="pmBtn" id="minus" aria-label="הורד חטיף"><img class="up" src="assets/minus_up.webp?v=20261020a" alt=""><img class="dn" src="assets/minus_down.webp?v=20261020a" alt=""></button>
+      <button class="pmBtn" id="plus" aria-label="הוסף חטיף"><img class="up" src="assets/plus_up.webp?v=20261020a" alt=""><img class="dn" src="assets/plus_down.webp?v=20261020a" alt=""></button>
     </div>
     <div id="lcd"><div class="lbl">חטיפים<small>נשארו</small></div><div id="digits"></div></div>
   </div>
@@ -184,9 +184,9 @@
   <div id="panelBox" class="box">
     <div id="vuBox"><div id="vu"></div><div id="db">-60</div></div>
     <div id="gateBox"><input id="gate" type="range" min="0" max="100" value="35" aria-label="שער רעש"></div>
-    <button id="audioBtn" class="imgBtn" aria-label="הפעל שמע"><img class="up" src="assets/audio_off.webp" alt=""><img class="on" src="assets/audio_on.webp" alt=""><img class="dn" src="assets/audio_down.webp" alt=""></button>
+    <button id="audioBtn" class="imgBtn" aria-label="הפעל שמע"><img class="up" src="assets/audio_off.webp?v=20261020a" alt=""><img class="on" src="assets/audio_on.webp?v=20261020a" alt=""><img class="dn" src="assets/audio_down.webp?v=20261020a" alt=""></button>
     <div id="feedWrap"><div id="feedRing"></div><button id="feed" aria-label="תן חטיף"></button></div>
-    <div id="lever"><img class="plate" src="assets/lever_plate.webp" alt=""><div id="leverBall"><img src="assets/lever_ball.webp" alt=""></div></div>
+    <div id="lever"><img class="plate" src="assets/lever_plate.webp?v=20261020a" alt=""><div id="leverBall"><img src="assets/lever_ball.webp?v=20261020a" alt=""></div></div>
   </div>
 
   <div id="tankBox" class="box">
@@ -196,14 +196,13 @@
       <div id="dogFlip"></div>
       <div id="bubble">ווף!</div>
     </div>
-    <img id="tankImg" src="assets/tank.webp" alt="">
     <div id="glass"></div>
   </div>
 
   <!-- תמונת המעטפת מעל הכל, ומעליה נורה, סמל ושלט -->
-  <img id="shellImg" src="assets/shell.webp" alt="">
+  <img id="shellImg" src="assets/shell.webp?v=20261020a" alt="">
   <div id="sheen"></div>
-  <div id="lampWrap" title="לחץ לבדיקת הנורה"><img src="assets/lamp_off.webp" alt=""><img class="on" src="assets/lamp_on.webp" alt=""></div>
+  <div id="lampWrap" title="לחץ לבדיקת הנורה"><img src="assets/lamp_off.webp?v=20261020a" alt=""><img class="on" src="assets/lamp_on.webp?v=20261020a" alt=""></div>
   <svg id="emblem" viewBox="0 0 64 64">
     <defs><linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff59a"/><stop offset=".5" stop-color="#ffe600"/><stop offset="1" stop-color="#e0a800"/></linearGradient></defs>
     <path d="M8 14 L18 4 L24 14 M56 14 L46 4 L40 14" fill="#ff1f8e" stroke="#0c0620" stroke-width="3" stroke-linejoin="round"/>
@@ -318,15 +317,15 @@
   const dog = $('dog'), dogFlip = $('dogFlip');
   const POSES = ['walk_1', 'walk_2', 'walk_3', 'walk_4', 'alert', 'bark', 'eat', 'sit', 'sit_happy', 'sleep'];
   const sprites = {}; let moving = false, pause = 0, eatUntil = 0, idlePose = 'sit', curPose = '';
-  POSES.forEach((n) => { const im = new Image(); im.src = 'assets/dog_' + n + '.webp'; im.alt = ''; dogFlip.appendChild(im); sprites[n] = im; });
-  fetch('assets/sizes.json').then((r) => r.json()).then((sz) => {          // גודל ונקודת עיגון (קולר) לכל תנוחה
-    POSES.forEach((n) => { const m = sz['dog_' + n]; if (!m) return; sprites[n].style.height = (m.h / 405 * 12.4) + 'cqw'; sprites[n].style.translate = (-(m.ax || .75) * 100) + '% 0'; });
-  }).catch(() => POSES.forEach((n) => { sprites[n].style.height = '12.4cqw'; sprites[n].style.translate = '-75% 0'; }));
+  POSES.forEach((n) => { const im = new Image(); im.src = 'assets/dog_' + n + '.webp?v=20261020a'; im.alt = ''; dogFlip.appendChild(im); sprites[n] = im; });
+  fetch('assets/sizes.json?v=20261020a').then((r) => r.json()).then((sz) => {          // גודל ונקודת עיגון (קולר) לכל תנוחה
+    POSES.forEach((n) => { const m = sz['dog_' + n]; if (!m) return; sprites[n].style.height = (m.h / 405 * 10.2) + 'cqw'; sprites[n].style.translate = (-(m.ax || .75) * 100) + '% 0'; });
+  }).catch(() => POSES.forEach((n) => { sprites[n].style.height = '10.2cqw'; sprites[n].style.translate = '-75% 0'; }));
   function pickPose(now) {
     if (barking) return 'bark';
     if (now < eatUntil) return 'eat';
     if (Date.now() - lastLoud > 35000) return 'sleep';
-    if (moving) return 'walk_' + (1 + Math.floor(now / 120) % 4);
+    if (moving) return 'walk_' + (1 + Math.floor(now / 150) % 4);
     if (Date.now() - lastFeed < 9000) return 'sit_happy';
     return idlePose;
   }
@@ -405,15 +404,16 @@
   }
   function dogTick(now) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
-    const sleeping = dog.dataset.s === 'sleep';
-    if (pause > 0 || sleeping) { pause -= dt; moving = false; }
+    const sleeping = curPose === 'sleep', busy = barking || now < eatUntil;
+    if (busy || sleeping) { moving = false; }
+    else if (pause > 0) { pause -= dt; moving = false; }
     else if (target) {
-      const to = target.x - 0.115 * dir; dir = to > dx ? 1 : -1; dx += dir * 0.55 * dt; moving = true;
+      const to = target.x - 0.1 * dir; dir = to > dx ? 1 : -1; dx += dir * 0.3 * dt; moving = true;
       if (Math.abs(to - dx) < 0.02) { target.el.remove(); target = null; moving = false; sfx.crunch(); pause = 2.4; eatUntil = performance.now() + 1500; speak('נחמד!'); }
     } else {
-      moving = true; dx += dir * 0.16 * dt;
-      if (dx > XMAX) { dx = XMAX; dir = -1; } if (dx < XMIN) { dx = XMIN; dir = 1; }
-      if (Math.random() < dt * 0.11) { pause = 1 + Math.random() * 2; idlePose = Math.random() < 0.5 ? 'sit' : 'alert'; }
+      moving = true; dx += dir * 0.1 * dt;
+      if (dx > XMAX) { dx = XMAX; dir = -1; pause = 1.2; } if (dx < XMIN) { dx = XMIN; dir = 1; pause = 1.2; }
+      if (Math.random() < dt * 0.07) { pause = 2.2 + Math.random() * 2.5; idlePose = Math.random() < 0.5 ? 'sit' : 'alert'; }
     }
     const W = tank.clientWidth;
     dog.style.transform = `translateX(${dx * W}px)`; dogFlip.style.transform = `scaleX(${dir})`; setSprite(now);

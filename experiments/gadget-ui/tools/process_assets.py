@@ -114,7 +114,7 @@ arr[172:505, 258:1738, 3] = 0
 tk = Image.fromarray(arr); save(crop_resize(tk, bbox(tk, 20), 1000), 'tank')
 
 # --- רקע המיכל (דיורמה מיניאטורית, אטום) ---
-bk = Image.open(SRC + 'tank_back_1_original.png').convert('RGB')
+bk = Image.open(SRC + 'tank_back_box_original.png').convert('RGB')   # דיורמה בתוך קופסת זכוכית (עומק: קירות צד, רצפה, תאורה)
 bk = bk.resize((1500, round(bk.height * 1500 / bk.width)), Image.LANCZOS)
 bk.save(OUT + 'tank_back.webp', 'WEBP', quality=84, method=6); sizes['tank_back'] = {'w': bk.width, 'h': bk.height}
 print('tank_back', bk.size, os.path.getsize(OUT + 'tank_back.webp') // 1024, 'KB')
